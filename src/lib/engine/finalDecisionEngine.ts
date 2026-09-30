@@ -53,7 +53,10 @@ export function generateFinalDecisionRecommendation(
 
   const achievedRatio = achievedCount / total;
 
-  if (achievedRatio >= 0.75 && notAchievedCount === 0 && unapprovedGov.length === 0) {
+  if (evaluated.length === 0 || evaluated.every((m) => m.status === 'Insufficient evidence')) {
+    recommendedOutcome = 'IMPROVE_AND_RETEST';
+    rationale = 'No pilot results are recorded yet, so there is nothing to base a decision on. Run the pilot and record real numbers first.';
+  } else if (achievedRatio >= 0.75 && notAchievedCount === 0 && unapprovedGov.length === 0) {
     recommendedOutcome = 'EXPAND';
     rationale = 'Empirical evidence supports broader rollout. Primary targets achieved with verified controls.';
   } else if (achievedRatio >= 0.4 || partialCount > 0) {

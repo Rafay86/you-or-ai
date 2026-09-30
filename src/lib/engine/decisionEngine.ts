@@ -33,6 +33,20 @@ export function assessTask(task: Partial<Task>): TaskAssessmentResult {
   const exceptionRate = task.exceptionRate || 'Medium';
   const humanRel = task.humanRelationshipImportance || 'Low';
 
+  // Essential information missing -> Needs Assessment, never a guess.
+  const gaps: string[] = [];
+  if (task.description !== undefined && task.description.trim().length < 12) gaps.push('The task description is too short to judge.');
+  if (task.currentOwner !== undefined && task.currentOwner.trim().length === 0) gaps.push('Nobody is named as doing this task today.');
+  if (gaps.length > 0) {
+    return {
+      recommendation: 'NEEDS_ASSESSMENT',
+      confidence: 'Low',
+      reasons: gaps,
+      riskFlags: ['Not enough information to recommend who should do this.'],
+      suggestedRoleSplit: { ai: ['Pending assessment'], human: ['Fill in the missing details for this task'] },
+    };
+  }
+
   // Check for NEEDS ASSESSMENT condition
   if (dataReadiness === 'Missing') {
     return {
@@ -128,6 +142,14 @@ export function assessTask(task: Partial<Task>): TaskAssessmentResult {
     humanRoles.push('Deliver communication and manage stakeholder relationship directly');
   }
 
+  // 9. System access: AI can only work with systems it can actually reach.
+  let accessUnconfirmed = false;
+  if (Array.isArray(task.systems) && task.systems.length === 0) {
+    accessUnconfirmed = true;
+    humanScore += 1;
+    riskFlags.push('System access is unconfirmed. Find out which systems this task uses and whether AI can be given access.');
+  }
+
   // Recommendation Determination
   let recommendation: TaskClassification = 'BOTH';
   let confidence: ConfidenceLevel = 'Medium';
@@ -136,9 +158,9 @@ export function assessTask(task: Partial<Task>): TaskAssessmentResult {
 
   if (aiScore >= 7 && humanScore <= 3 && sensitivity !== 'Strictly Restricted' && errorImpact !== 'Critical') {
     recommendation = 'AI';
-    confidence = aiScore >= 9 ? 'High' : 'Medium';
+    confidence = aiScore >= 9 && !accessUnconfirmed ? 'High' : 'Medium';
     if (aiRoles.length === 0) aiRoles.push('Autonomous task execution');
-    humanRoles.push('Periodic audit and exception handling');
+    humanRoles.push('Review exceptions and a periodic quality sample; AI does not run unattended without a defined exception route');
   } else if (humanScore >= 7 && aiScore <= 3) {
     recommendation = 'YOU';
     confidence = humanScore >= 9 ? 'High' : 'Medium';

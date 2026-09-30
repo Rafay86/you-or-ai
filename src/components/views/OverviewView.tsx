@@ -1,12 +1,11 @@
 import React from 'react';
-import { WorkflowState, TemplateDefinition, TaskClassification } from '@/types';
-import { sampleTemplates } from '@/lib/data/seedData';
+import { WorkflowState, TaskClassification } from '@/types';
+import { EarlyEstimateBanner } from '@/components/common/Provenance';
 import { ArrowRight } from 'lucide-react';
 
 interface OverviewViewProps {
   workflow: WorkflowState;
   onNavigate: (viewId: string) => void;
-  onSelectTemplate: (templateId: string) => void;
 }
 
 const lanes: { key: TaskClassification; title: string; blurb: string; dot: string; text: string }[] = [
@@ -15,13 +14,15 @@ const lanes: { key: TaskClassification; title: string; blurb: string; dot: strin
   { key: 'AI', title: 'AI', blurb: 'Safe to hand over', dot: 'bg-ai', text: 'text-ai-ink' },
 ];
 
-export const OverviewView: React.FC<OverviewViewProps> = ({ workflow, onNavigate, onSelectTemplate }) => {
+export const OverviewView: React.FC<OverviewViewProps> = ({ workflow, onNavigate }) => {
   const effective = (t: WorkflowState['tasks'][number]) => t.override?.newClassification ?? t.recommendation;
   const byLane = (k: TaskClassification) => workflow.tasks.filter((t) => effective(t) === k);
   const counts = { YOU: byLane('YOU').length, BOTH: byLane('BOTH').length, AI: byLane('AI').length };
 
   return (
     <div className="space-y-16">
+      {workflow.isEarlyEstimate && <EarlyEstimateBanner onFix={() => onNavigate('current-state')} />}
+
       {workflow.isTemplateExample && (
         <div className="animate-rise flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-gold-50 border border-gold-200 px-5 py-3.5">
           <p className="text-sm text-gold-800">
@@ -29,7 +30,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ workflow, onNavigate
             up so you can see how everything fits.
           </p>
           <button
-            onClick={() => onNavigate('discover')}
+            onClick={() => onNavigate('current-state')}
             className="text-sm font-semibold text-gold-800 underline underline-offset-4 decoration-gold-500 hover:decoration-2"
           >
             Walk through it
@@ -52,7 +53,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ workflow, onNavigate
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <button
-              onClick={() => onNavigate('discover')}
+              onClick={() => onNavigate('start')}
               className="inline-flex items-center gap-2 rounded-full bg-navy-900 hover:bg-navy-800 text-white text-sm font-semibold px-6 py-3.5 transition-colors"
             >
               Start with a workflow <ArrowRight className="h-4 w-4" />
@@ -107,46 +108,24 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ workflow, onNavigate
         </div>
       </section>
 
-      {/* Templates */}
+      {/* Three ways in */}
       <section>
         <div className="mb-6">
-          <h2 className="font-display text-3xl font-semibold">Start from a workflow you know</h2>
-          <p className="mt-2 text-navy-700">Pick one to explore. You can change every number afterwards.</p>
+          <h2 className="font-display text-3xl font-semibold">Work on your own workflow</h2>
+          <p className="mt-2 text-navy-700">Three ways to start. All of them end in the same editable workspace.</p>
         </div>
-        <div className="grid md:grid-cols-2 gap-5">
-          {sampleTemplates.map((template: TemplateDefinition) => {
-            const isCurrent = workflow.identity.id === template.id;
-            return (
-              <article
-                key={template.id}
-                className={`flex flex-col justify-between rounded-2xl p-7 transition-shadow hover:shadow-md ${
-                  isCurrent ? 'bg-white border-2 border-navy-900' : 'bg-white border border-navy-100'
-                }`}
-              >
-                <div>
-                  <p className="text-xs font-medium text-navy-600">
-                    {template.isImplemented ? 'Ready to explore' : 'Outline only'}
-                    {isCurrent && <span className="ml-2 rounded-full bg-gold-100 text-gold-800 px-2 py-0.5">Open now</span>}
-                  </p>
-                  <h3 className="mt-3 font-display text-2xl font-semibold leading-tight">{template.title}</h3>
-                  <p className="mt-3 text-[15px] text-navy-700 leading-relaxed">{template.description}</p>
-                </div>
-                <div className="mt-7 flex items-center justify-between">
-                  <span className="text-xs text-navy-600">
-                    {template.isImplemented ? '11 tasks, full pilot data' : 'Sample structure'}
-                  </span>
-                  <button
-                    onClick={() => onSelectTemplate(template.id)}
-                    className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
-                      isCurrent ? 'bg-navy-900 text-white hover:bg-navy-800' : 'bg-navy-100 text-navy-900 hover:bg-navy-100/60'
-                    }`}
-                  >
-                    {isCurrent ? 'Keep working' : 'Open this one'} <ArrowRight className="h-3.5 w-3.5" />
-                  </button>
-                </div>
-              </article>
-            );
-          })}
+        <div className="grid md:grid-cols-3 gap-5">
+          {[
+            { id: 'start', t: 'Quick start', d: 'Five questions, one editable draft.' },
+            { id: 'start', t: 'Upload a procedure', d: 'PDF, Word or text, read in your browser.' },
+            { id: 'templates', t: 'Industry library', d: 'Banking, insurance and cross-industry starters.' },
+          ].map((c) => (
+            <button key={c.t} onClick={() => onNavigate(c.id)} className="text-left rounded-2xl bg-white border border-navy-100 p-6 hover:border-navy-900 hover:shadow-md transition">
+              <h3 className="font-display text-xl font-semibold">{c.t}</h3>
+              <p className="mt-2 text-sm text-navy-700">{c.d}</p>
+              <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold">Begin <ArrowRight className="h-3.5 w-3.5" /></span>
+            </button>
+          ))}
         </div>
       </section>
     </div>

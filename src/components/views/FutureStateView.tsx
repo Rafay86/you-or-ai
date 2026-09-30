@@ -1,20 +1,26 @@
 import React, { useState } from 'react';
 import { WorkflowState, WorkflowNode, NodeType } from '@/types';
+import { canvasIsStale } from '@/lib/engine/workflowBuilder';
 import { GitBranch, Plus, Trash2, Edit2, ArrowRight, ShieldCheck, CheckCircle } from 'lucide-react';
 
 interface FutureStateViewProps {
   workflow: WorkflowState;
   onUpdateCanvas: (updatedCanvas: WorkflowState['canvas']) => void;
+  onRebuildCanvas?: () => void;
   onNavigate: (viewId: string) => void;
 }
 
 export const FutureStateView: React.FC<FutureStateViewProps> = ({
   workflow,
   onUpdateCanvas,
+  onRebuildCanvas,
   onNavigate,
 }) => {
   const [activeTab, setActiveTab] = useState<'current' | 'proposed'>('proposed');
   const [canvasData, setCanvasData] = useState(workflow.canvas);
+  React.useEffect(() => setCanvasData(workflow.canvas), [workflow.canvas]);
+  // The built-in example's canvas is hand-drawn at a different granularity, so only generated canvases are compared.
+  const stale = !workflow.isTemplateExample && canvasIsStale(workflow.canvas, workflow.tasks);
   const [editingNode, setEditingNode] = useState<WorkflowNode | null>(null);
 
   const currentNodes = canvasData.currentState.nodes;
@@ -69,12 +75,21 @@ export const FutureStateView: React.FC<FutureStateViewProps> = ({
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
+      {stale && onRebuildCanvas && (
+        <div role="status" className="rounded-xl border border-gold-200 bg-gold-50 px-4 py-3 text-sm text-gold-800 flex flex-wrap items-center justify-between gap-2">
+          <span>Your You / AI / Both decisions have changed since this proposed workflow was drawn.</span>
+          <button onClick={() => { onRebuildCanvas(); }} className="font-semibold underline underline-offset-4 decoration-gold-500">
+            Redraw from decisions (replaces hand edits)
+          </button>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
-              Step 3 of 7
+              Step 4 of 9
             </span>
             <span className="text-xs font-semibold text-slate-500">
               Interactive Workflow Canvas

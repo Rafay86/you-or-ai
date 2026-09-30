@@ -1,254 +1,149 @@
 # You, AI, or Both? Studio
 
-> **Turn real business workflows into practical, measurable, evidence-based AI transformation plans.**
+Work out which tasks in a real workflow should be done by **you**, by **AI**, or by **both**, then plan the change, build the business case, and track a pilot.
 
----
+Everything runs in the browser with transparent rules. No API keys, no paid AI service, and uploaded documents never leave the machine.
 
-## 📌 Executive Summary
+## Run it
 
-**You, AI, or Both? Studio** is a premium, executive-grade web application built for CEOs, COOs, CFOs, CIOs, enterprise architects, and transformation leaders. It helps business leaders evaluate complex workflows, classify tasks into Human (**YOU**), AI-led (**AI**), or Hybrid (**BOTH**), model transparent ROI ranges, enforce implementation dependencies, track pilot metrics, and generate board-ready executive reports.
-
-Unlike typical AI tools that rely on black-box scoring or expensive paid LLM APIs, this studio operates **100% deterministically through transparent rule-based logic and mathematical models**.
-
----
-
-## 🎨 Visual System & Design Philosophy
-
-The application uses a restrained executive color palette designed for high-level leadership workshops:
-
-| Color Role | Hex Code | Purpose |
-| :--- | :--- | :--- |
-| **Deep Navy** | `#0B132B` | Primary headers, key decision cards, brand anchors |
-| **Charcoal** | `#111827` | High-contrast body typography & structural elements |
-| **Warm White** | `#F8FAFC` | Primary background canvas |
-| **Slate** | `#64748B` | Subtitle text, metadata labels, secondary borders |
-| **Soft Gold** | `#C8A96B` | Executive accents, highlights, primary CTAs |
-
-> [!NOTE]
-> **No AI Clutter**: No neon purple/cyan gradients, no glowing AI brain graphics, no gamified progress bars, and no arbitrary "AI Scores". Every visual component answers a direct business question.
-
----
-
-## 🚀 The 7-Stage Transformation Journey
-
-The product guides users through an end-to-end evidence-based lifecycle:
-
-```text
-01 Discover ──► 02 Assess ──► 03 Redesign ──► 04 Business Case ──► 05 Roadmap ──► 06 Pilot ──► 07 Decide
-```
-
-### 1. `01 Discover` — Workflow Scope & Intake
-- Capture identity (name, purpose, owner, business function, frequency, triggers, outcomes).
-- Record team members, systems involved (Excel, SAP, Salesforce, Slack, SharePoint), weekly/monthly volumes, labor costs ($/hr), cycle times, and friction pain point tags.
-
-### 2. `02 Assess` — Task Classification Matrix
-- Displays all workflow steps in a structured matrix table.
-- Runs the deterministic rule engine (`assessTask`) evaluating repeatability, data readiness, judgment required, sensitivity, error impact, output checkability, exception rate, and human relationship value.
-- **Detail Drawer & Override System**: Opens a right-side panel showing transparent rule rationale, risk flags, suggested AI/Human role splits, and an override form that logs changes to an immutable audit trace.
-
-### 3. `03 Redesign` — Future-State Workflow Canvas
-- Visual node graph allowing side-by-side comparison between **Current State** (legacy manual handoffs) and **Proposed State** (automated target architecture with human review gates).
-
-### 4. `04 Scenario Comparison`
-- Compare **Scenario A (Cautious Human-Led)** vs **Scenario B (More Automated)** across human effort hours, AI involvement %, implementation weeks, operating costs, and required controls.
-
-### 5. `05 Business Case` — Financial ROI & Live Assumptions
-- Calculates baseline labor expenditure, future time released ranges (min/max hrs), implementation costs, and net annual financial benefit ranges.
-- Evaluates data completeness with a **Confidence Rating** (`High`, `Medium`, `Low`).
-- Features a live **Assumption Panel** to edit hourly rates, volume, automation percentages, and operating expenses with real-time recalculation.
-
-### 6. `06 Roadmap` — 30/60/90-Day Implementation & Dependency Engine
-- 3-column Kanban board for implementation milestones.
-- Enforces task dependencies (**🔒 Blocked status**): downstream tasks cannot be started until prerequisite tasks are completed, unless a manual override reason is recorded.
-
-### 7. `07 Pilot` — Metric Baseline vs Target vs Actual Tracking
-- Track empirical pilot performance across Time, Quality, Adoption, Cost, and Error Rate.
-- Includes interactive Recharts bar chart visualizers and metric status badges (`Achieved`, `Partially achieved`, `Not achieved`).
-
-### 8. `08 Decide` — Neutral Executive Gate
-- Generates automated decision recommendations (**`EXPAND`**, **`IMPROVE & RETEST`**, **`STOP`**) by evaluating target achievement, open operational risks, and evidence completeness.
-- Supports executive leadership overrides with logged justifications.
-
-### 9. `09 Executive View & PDF Exporter`
-- Board-ready 1-page summary for C-suite review.
-- Includes a client-side **Export PDF** engine that compiles the full transformation briefing into a downloadable PDF artifact.
-
----
-
-## 🛠️ Step-by-Step Local Setup Guide
-
-Follow these instructions to run the application on your local machine.
-
-### 📋 Prerequisites
-Make sure you have Node.js and npm installed:
-- **Node.js**: `v18.0.0` or higher (Tested on `v24.18.1`)
-- **npm**: `v9.0.0` or higher (Tested on `v12.0.2`)
-
----
-
-### Step 1: Open Terminal & Navigate to Project
-```bash
-cd c:\Users\mohdr\workspace\you_or_ai
-```
-
----
-
-### Step 2: Install Project Dependencies
-Install Next.js, React, Tailwind CSS, Lucide React, Recharts, Vitest, and jsPDF:
 ```bash
 npm install
+npm run dev        # http://localhost:3000
+npm test           # 56 tests
+npm run build      # production build
 ```
 
----
+Node 18 or newer. No Docker needed.
 
-### Step 3: Start Development Server
-Launch the local Next.js development server:
-```bash
-npm run dev
+## The journey
+
+| # | Step | What it does |
+|---|------|--------------|
+| 1 | **Begin** | Quick start (five questions), upload a PDF/Word/text procedure, or copy a starter from the industry library |
+| 2 | **Confirm the work** | Edit every step: output, owner, systems, volume, time, delays, handoffs, exceptions, judgment, sensitivity, error cost. Add steps that happen in practice but aren't documented. Each step shows its source |
+| 3 | **Who does what** | Rule engine recommends You / AI / Both / Needs Assessment with plain-language reasons. Overrides record who and why |
+| 4 | **Redesign** | Today and proposed side by side, plus a cautious and a more automated scenario |
+| 5 | **People and controls** | One row per changed task: roles, skills, training, owners, controls, testing, approval, prerequisites, open risks |
+| 6 | **Business case** | Ranges, editable assumptions, each labelled as your fact, a template default, or a product estimate |
+| 7 | **Roadmap** | 30/60/90 days generated from the changes. Anything with an unmet prerequisite shows as blocked |
+| 8 | **Pilot** | Enter actual results, see which assumptions were wrong |
+| 9 | **Decide** | Expand, improve and retest, or stop, with evidence |
+
+Also: executive summary, governance and open risks, saved projects with named versions, and a PDF report that labels early estimates and unconfirmed items.
+
+## Architecture
+
+Next.js 14 (App Router) + TypeScript + Tailwind. Client-side only for now.
+
+```
+src/
+  app/                    page shell and state handlers
+  components/
+    views/                one file per screen
+    common/               badges, provenance labels
+    layout/               sidebar and header
+  lib/
+    engine/               pure rules and calculations (no React, no I/O)
+      decisionEngine      task -> You / AI / Both / Needs Assessment
+      changePlanEngine    tasks -> skills, controls, tests, prerequisites
+      roadmapEngine       changes -> 30/60/90 actions with dependencies
+      dependencyEngine    blocked / unblocked
+      calculationEngine   business-case ranges
+      pilotEngine         actual vs target
+      assumptionCheck     which assumptions the pilot disproved
+      workflowBuilder     one path from steps to a full workspace
+      startFlows          Quick start and library entry points
+      inference           guesses task attributes from wording (labelled as assumptions)
+      pdfExport           report
+    extraction/           document reading and step extraction (browser only)
+    storage/              localStorage repository, migration, versions
+    data/                 seed example, industry library, sample procedure
+  types/                  data model
 ```
 
-You should see output confirming the server is ready:
-```text
-  ▲ Next.js 14.2.15
-  - Local:        http://localhost:3000
+Separation: the decision engine, extraction, business-case maths, and UI don't import each other's internals. Engines take plain objects and return plain objects, which is why they are unit-tested without a browser.
 
- ✓ Starting...
- ✓ Ready in 2.6s
-```
+**Why client-side and localStorage.** The brief requires that documents stay confidential and that the product work without a paid API. Doing extraction in the browser makes that true by construction: there is no server to log or leak a file. The cost is single-device storage. `lib/storage/db.ts` is the only file that touches storage, so swapping in a server database means replacing that one class.
 
----
+## Data model
 
-### Step 4: Open Application in Browser
-Open your web browser and visit:
-👉 **[http://localhost:3000](http://localhost:3000)**
+`WorkflowState` (see `src/types/index.ts`) holds one project:
 
----
+- `identity`: name, owner, volume, cost, pain points
+- `tasks[]`: the steps. Each has the assessment attributes plus `source` (`document` with page/section and excerpt, `template`, or `user`), `origin` (`documented` or `observed`), systems, delays, handoffs, exceptions, `openQuestions`, and `needsReview`
+- `changePlan[]`: one `ChangeItem` per changed task (skills, controls, owners, prerequisites)
+- `canvas`, `scenarios[]`, `assumptions[]` (each with `provenance`), `roadmap[]`, `pilotMetrics[]` (with `recorded`), `governanceItems[]`, `finalDecision`
+- `startMode`, `isEarlyEstimate`, `reviewConfirmed`, `guidance`, `schemaVersion`
 
-### Step 5: Run Automated Engine Test Suite
-To run the Vitest unit tests verifying decision rules, financial math, dependency blocking, and pilot metrics:
-```bash
-npm test
-```
+Old saved projects are upgraded on load by `migrateWorkflow`; it only fills missing fields and never overwrites anything the user entered.
 
-Expected output:
-```text
- ✓ src/lib/engine/__tests__/dependencyEngine.test.ts (4 tests)
- ✓ src/lib/engine/__tests__/decisionEngine.test.ts (4 tests)
- ✓ src/lib/engine/__tests__/calculationEngine.test.ts (3 tests)
+## Decision logic
 
- Test Files  3 passed (3)
-      Tests  11 passed (11)
-```
+`assessTask` scores eight attributes plus system access. Nothing is hidden.
 
----
+| Factor | Pushes toward AI | Pushes toward a person |
+|--------|------------------|------------------------|
+| Repeatability | High | Low |
+| Data readiness | Structured | Unstructured |
+| Judgment | Low | High |
+| Sensitivity | | Confidential, Strictly restricted |
+| Error impact | | High, Critical |
+| Ease of checking output | Easy | Difficult |
+| Exception rate | Low | High |
+| Relationship value | | High |
+| System access | | Unconfirmed |
 
-### Step 6: Build for Production
-To create an optimized production build:
-```bash
-npm run build
-npm start
-```
+- **Needs Assessment** when essential information is missing: description under 12 characters, no owner, or data readiness "Missing". The engine never guesses.
+- **AI never means unattended.** AI tasks always carry a review or exception route, and confidence is capped below High when system access is unconfirmed.
+- Overrides win, and are logged with user, time, and reason.
 
----
+Quick start and uploads have less detail, so `inference.ts` guesses attributes from wording. Those guesses are shown on the step as "Assumed or missing" and the whole draft is labelled an early estimate.
 
-## 💡 Walkthrough of Default Seeded Demo
+## Upload and extraction
 
-The studio comes pre-loaded with a complete seed dataset: **Weekly Management Reporting**.
+- PDF (`pdfjs-dist`), Word (`mammoth`), plain text and Markdown. Max 5 MB. Type is checked by extension **and** file signature.
+- Read in the browser. Nothing is uploaded, sent to an AI service, or logged. Only error names are logged, never text.
+- Extraction finds steps, owners, systems, decisions, handoffs, exceptions and controls with heuristics. Each item keeps its page or section and an excerpt.
+- Anything unclear is flagged, not guessed. The user must review and tick a confirmation before analysis runs.
+- Scanned PDFs (no text layer) are rejected with a clear message. There is no OCR.
 
-### Try This Demo Flow in your browser:
-1. **Open App**: Visit `http://localhost:3000`. Click **Start with a workflow** or **Explore Workflow**.
-2. **Inspect Tasks (02 Assess)**:
-   - Click **Task Assessment** in the left sidebar.
-   - Click **Step 7: Draft management commentary**.
-   - Notice the badge showing **BOTH (Human + AI)** and an active override logged by `Priya Sharma (VP Ops)`.
-   - Click **Override Recommendation** to test recording a new override with a custom reason.
-3. **View Visual Canvas (03 Redesign)**:
-   - Click **Future State** in the left sidebar.
-   - Toggle between **Current State Workflow** and **Proposed State (Human + AI Target)**.
-4. **Compare Scenarios**:
-   - Click **Scenario Comparison** and toggle selection between Scenario A (Cautious) and Scenario B (More Automated).
-5. **Adjust Financial Model (04 Business Case)**:
-   - Click **Business Case**.
-   - Click **View & Edit Assumptions**.
-   - Edit **Estimated Hourly Labor Cost** (e.g., change `$65` to `$85`). Observe the Net Annual Benefit range update live!
-6. **Test Dependency Locking (05 Roadmap)**:
-   - Click **Roadmap**.
-   - Find task **"Run controlled 4-week pilot"** (marked **🔒 Blocked**).
-   - Try changing its status to **In progress**. An alert modal will appear explaining that prerequisite tasks must be completed first.
-7. **View Pilot Results (06 Pilot)**:
-   - Click **Pilot Workspace**. View baseline vs actual bar charts.
-   - Click **Edit Actual** next to any metric to test entering new numbers.
-8. **Export Executive PDF (08 Executive View)**:
-   - Click **Executive View** or the **Export Report** button in the top bar.
-   - Click **Export Executive PDF** to download the official board briefing document.
+`public/pdf.worker.min.mjs` is a copy of the pdf.js worker from `node_modules/pdfjs-dist/legacy/build/`. Refresh it if you upgrade `pdfjs-dist`.
 
----
+## Sample workflows
 
-## 🏗️ Project Architecture & Directory Structure
+- **Weekly management report** (built-in worked example, cross-industry). AI gathers and consolidates updates, manager and AI examine unusual movements together, and the manager keeps the escalation decision and the team conversation.
+- **Banking:** customer onboarding and identity review, retail loan document check, customer complaint triage.
+- **Insurance:** motor claim intake and triage, policy renewal review.
+- A sample procedure for trying upload without your own document.
 
-```text
-you_or_ai/
-├── src/
-│   ├── app/
-│   │   ├── globals.css         # Global Tailwind directives & styling
-│   │   ├── layout.tsx          # Root Next.js layout metadata wrapper
-│   │   └── page.tsx            # Main application router & state controller
-│   ├── components/
-│   │   ├── common/
-│   │   │   ├── AssumptionPanel.tsx     # Editable financial assumptions modal
-│   │   │   ├── Badge.tsx               # Executive badges (YOU, AI, BOTH)
-│   │   │   ├── ConfidenceIndicator.tsx # Completeness confidence indicator
-│   │   │   └── DecisionTrace.tsx       # Immutable audit trace log viewer
-│   │   ├── layout/
-│   │   │   └── AppShell.tsx            # Navigation sidebar, topbar & stepper
-│   │   └── views/
-│   │       ├── OverviewView.tsx        # Hero promise & starter templates
-│   │       ├── DiscoverView.tsx        # Workflow intake form
-│   │       ├── TaskAssessmentView.tsx  # Matrix table & recommendation drawer
-│   │       ├── FutureStateView.tsx     # Interactive visual node canvas
-│   │       ├── ScenarioComparisonView.tsx # Scenario A vs B matrix
-│   │       ├── BusinessCaseView.tsx    # ROI calculations & ranges
-│   │       ├── RoadmapView.tsx         # 30/60/90 board & dependency locking
-│   │       ├── PilotView.tsx           # Baseline vs actual charts & table
-│   │       ├── FinalDecisionView.tsx   # Neutral evidence decision gate
-│   │       ├── ExecutiveView.tsx       # 1-page board-ready summary
-│   │       ├── GovernanceView.tsx      # Risk, oversight & testing checklist
-│   │       ├── TemplatesView.tsx       # Transformation template picker
-│   │       └── SettingsView.tsx        # System architecture & data reset
-│   ├── lib/
-│   │   ├── data/
-│   │   │   └── seedData.ts         # Weekly Management Reporting demo data
-│   │   ├── engine/
-│   │   │   ├── decisionEngine.ts   # assessTask() transparent rule scoring
-│   │   │   ├── calculationEngine.ts# Cost, time savings & confidence math
-│   │   │   ├── dependencyEngine.ts # Prerequisite validation & task locking
-│   │   │   ├── pilotEngine.ts      # Metric variance & status analysis
-│   │   │   ├── finalDecisionEngine.ts # EXPAND / RETEST / STOP evidence logic
-│   │   │   ├── aiProvider.ts       # Optional AI provider abstraction interface
-│   │   │   ├── pdfExport.ts        # Client-side Executive PDF generator
-│   │   │   └── __tests__/          # Vitest unit test suite
-│   │   └── storage/
-│   │       └── db.ts               # Persistent LocalStorage database repository
-│   └── types/
-│       └── index.ts                # TypeScript domain interfaces & types
-├── next.config.js                  # Next.js configuration
-├── tailwind.config.js              # Executive color system configuration
-├── tsconfig.json                   # TypeScript compiler configuration
-├── vitest.config.ts                # Vitest test runner configuration
-└── package.json                    # Project metadata & npm dependencies
-```
+All fictional. None is presented as a real procedure or a regulatory requirement.
 
----
+## What was tested
 
-## 🔒 Enterprise Deployment Roadmap
+56 automated tests cover: decision rules including Needs Assessment and system access; the acceptance example; change-plan derivation; roadmap generation and blocked propagation; migration of old saves; Quick start validation; library contents; extraction from text, a real PDF and a real DOCX; upload validation; pilot and assumption checks; and PDF contents.
 
-For production deployment in large enterprises, the architecture is designed to support:
+Checked by hand in the browser, on a project created from the library: override, redesign, editing an assumption, prerequisites, roadmap rebuild and status change, pilot entry, decision, executive summary, governance, plus Quick start, upload of a real PDF (development and production builds), sample upload, all four failure paths (wrong type, fake PDF, oversize, empty), library copy, saved projects and versions, and loading a save that predates the new fields.
 
-| Layer | Studio Demo | Enterprise Production Requirement |
-| :--- | :--- | :--- |
-| **Authentication** | Local Profile | OIDC / SAML 2.0 (Okta, Azure AD, Ping) |
-| **Database** | LocalStorage DB Repository (`db.ts`) | PostgreSQL / Supabase with Prisma ORM |
-| **Access Control** | Single User | Role-Based Access Control (RBAC: Admin, Analyst, Approver) |
-| **Audit Logging** | Client Decision Trace | Append-only PostgreSQL Audit Trail Table |
-| **AI Integration** | Built-in Rule Engine | Optional LLM Hooks behind `AIProvider` Interface |
-| **Compliance** | Governance Checklist | SOC 2 Type II, ISO 27001, Data Encryption at Rest |
+## Limitations
+
+- **Single device.** Projects live in this browser's localStorage. No accounts, sharing, or sync.
+- **Extraction is heuristic.** It reads clear numbered or bulleted procedures well and messy prose poorly. It is why the review step is mandatory.
+- **No OCR**, no tables or diagrams from documents.
+- **Attribute inference from wording is crude.** Quick-start verdicts are early estimates and are labelled so.
+- **Business-case maths is simple.** Time released is a function of task classes and editable assumptions. It is not validated against real programmes.
+- **Controls are prompts, not compliance.** Nothing is mapped to a regulation.
+- **Not tested:** Word files with tracked changes or embedded objects, very large PDFs, non-English documents, screen readers beyond basic labelling, browsers other than Chromium.
+- The built-in example's proposed workflow is hand-drawn and does not redraw when you override a task. Projects you create do redraw (or offer to) when decisions change.
+- Some older views (Discover, Future State, Scenario, Governance) keep their earlier layout and copy.
+
+## Before an enterprise launch
+
+1. Server storage with authentication, roles, and per-project sharing.
+2. Audit log that cannot be edited from the browser.
+3. Optional AI-assisted extraction, off by default, with an explicit consent screen stating exactly what is sent.
+4. OCR for scanned procedures.
+5. Real calibration of the business case against pilot data.
+6. Policy packs: let a company load its own controls and approval rules instead of the generic prompts.
+7. Accessibility audit and a full cross-browser pass.
+8. Bring the remaining older views onto the new design.
+9. End-to-end browser tests (Playwright) for the main journeys.

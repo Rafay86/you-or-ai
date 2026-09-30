@@ -20,7 +20,7 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
   const [overrideModalOpen, setOverrideModalOpen] = useState(false);
   const [overrideOutcome, setOverrideOutcome] = useState<FinalDecisionOutcome>(decisionState.selectedOutcome);
   const [overrideReason, setOverrideReason] = useState('');
-  const [decidedBy, setDecidedBy] = useState(decisionState.decidedBy || 'Elena Rostova (COO)');
+  const [decidedBy, setDecidedBy] = useState(decisionState.decidedBy || workflow.identity.people?.approvers?.[0] || '');
 
   const handleSaveOverride = (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +52,7 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
-              Step 7 of 7
+              Step 9 of 9
             </span>
             <span className="text-xs font-semibold text-slate-500">
               Evidence-Based Executive Gate
@@ -77,7 +77,7 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-xs font-bold text-gold-400 ">
             <Award className="h-5 w-5" />
-            Automated Evidence Recommendation: {assessment.recommendedOutcome}
+            What the evidence suggests: {assessment.recommendedOutcome}
           </div>
 
           <button
@@ -94,9 +94,9 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
 
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-4 border-t border-navy-800">
           <div>
-            <span className="text-xs text-slate-400 font-semibold">Authorized Outcome</span>
+            <span className="text-xs text-slate-400 font-semibold">{decisionState.decidedAt ? 'Decision' : 'Decision'}</span>
             <div className="text-3xl font-semibold text-gold-400 mt-1">
-              {decisionState.selectedOutcome}
+              {decisionState.decidedAt ? decisionState.selectedOutcome : 'Not decided yet'}
               {decisionState.overrideReason && (
                 <span className="ml-3 text-xs font-bold px-2.5 py-1 rounded bg-gold-900 text-gold-300 border border-gold-700">
                   Leadership Override
@@ -108,8 +108,29 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
 
           <div className="text-xs text-slate-300 space-y-1 bg-navy-800/80 p-4 rounded-xl border border-navy-700 min-w-[220px]">
             <div className="text-slate-400 font-bold text-[10px]">Decision Metadata</div>
-            <div>Decided By: <strong className="text-white">{decisionState.decidedBy}</strong></div>
-            <div>Date: <strong className="text-white">{new Date(decisionState.decidedAt).toLocaleDateString()}</strong></div>
+            {decisionState.decidedAt ? (
+              <>
+                <div>Decided by: <strong className="text-white">{decisionState.decidedBy || 'unnamed'}</strong></div>
+                <div>Date: <strong className="text-white">{new Date(decisionState.decidedAt).toLocaleDateString()}</strong></div>
+              </>
+            ) : (
+              <div className="space-y-2">
+                <label className="block">Decided by
+                  <input value={decidedBy} onChange={(e) => setDecidedBy(e.target.value)} placeholder="Name of the decision maker" className="mt-1 w-full rounded-md bg-white text-navy-900 px-2 py-1.5 text-xs" />
+                </label>
+                <button
+                  disabled={!decidedBy.trim()}
+                  onClick={() => {
+                    const updated: FinalDecisionState = { ...decisionState, selectedOutcome: assessment.recommendedOutcome, recommendedOutcome: assessment.recommendedOutcome, decidedBy: decidedBy.trim(), decidedAt: new Date().toISOString(), evidenceSummary: assessment.evidenceSummary, openRisks: assessment.openRisks, evidenceGaps: assessment.evidenceGaps };
+                    setDecisionState(updated);
+                    onUpdateFinalDecision(updated);
+                  }}
+                  className="w-full rounded-md bg-gold-500 hover:bg-gold-400 disabled:opacity-40 text-navy-900 font-semibold px-3 py-1.5"
+                >
+                  Record this as the decision
+                </button>
+              </div>
+            )}
           </div>
         </div>
 

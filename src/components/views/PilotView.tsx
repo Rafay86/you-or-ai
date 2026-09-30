@@ -1,3 +1,4 @@
+import { checkAssumptions } from '@/lib/engine/assumptionCheck';
 import React, { useState } from 'react';
 import { WorkflowState, PilotMetric } from '@/types';
 import { evaluateAllPilotMetrics } from '@/lib/engine/pilotEngine';
@@ -28,7 +29,7 @@ export const PilotView: React.FC<PilotViewProps> = ({
   };
 
   const handleSaveActual = (id: string) => {
-    const updated = metrics.map((m) => (m.id === id ? { ...m, actual: editActual } : m));
+    const updated = metrics.map((m) => (m.id === id ? { ...m, actual: editActual, recorded: true } : m));
     setMetrics(updated);
     onUpdatePilotMetrics(updated);
     setEditingMetricId(null);
@@ -50,7 +51,7 @@ export const PilotView: React.FC<PilotViewProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
-              Step 6 of 7
+              Step 8 of 9
             </span>
             <span className="text-xs font-semibold text-slate-500">
               Empirical Evidence Dashboard
@@ -141,11 +142,14 @@ export const PilotView: React.FC<PilotViewProps> = ({
                         </div>
                       ) : (
                         <span className="font-semibold text-slate-900">
-                          {m.actual} {m.unit}
+                          {m.recorded === false ? <span className="font-normal text-slate-500">Not recorded</span> : `${m.actual} ${m.unit}`}
                         </span>
                       )}
                     </td>
                     <td className="py-3 px-3 font-semibold">
+                      {m.recorded === false ? (
+                        <span className="font-normal text-slate-500">—</span>
+                      ) : (
                       <span
                         className={
                           m.direction === 'reduction'
@@ -159,6 +163,7 @@ export const PilotView: React.FC<PilotViewProps> = ({
                       >
                         {m.variance > 0 ? `+${m.variance}` : m.variance} {m.unit} ({m.variancePct}%)
                       </span>
+                      )}
                     </td>
                     <td className="py-3 px-4">
                       <StatusBadge status={m.status} />
@@ -188,6 +193,28 @@ export const PilotView: React.FC<PilotViewProps> = ({
           </table>
         </div>
       </div>
+
+      {/* Which assumptions turned out to be wrong */}
+      <section className="space-y-3">
+        <h2 className="font-display text-2xl font-semibold">Which assumptions held up</h2>
+        <ul className="divide-y divide-navy-100 rounded-2xl bg-white border border-navy-100">
+          {checkAssumptions(metrics, workflow.assumptions).map((f) => (
+            <li key={f.label} className="p-4 flex flex-wrap items-start justify-between gap-3 text-sm">
+              <div className="min-w-0">
+                <p className="font-medium">{f.label}</p>
+                <p className="text-navy-600 mt-0.5">{f.note}</p>
+              </div>
+              <div className="text-right shrink-0">
+                <p className="text-navy-600">Assumed {f.expected}</p>
+                <p className="font-medium">Measured {f.actual}</p>
+                <span className={`mt-1 inline-block rounded-full px-2 py-0.5 text-[11px] font-medium ${f.verdict === 'held' ? 'bg-both-soft text-both-ink' : f.verdict === 'partly' ? 'bg-gold-100 text-gold-800' : f.verdict === 'wrong' ? 'bg-red-50 text-status-redText' : 'bg-navy-100 text-navy-700'}`}>
+                  {f.verdict === 'held' ? 'Held' : f.verdict === 'partly' ? 'Partly held' : f.verdict === 'wrong' ? 'Was wrong' : 'Untested'}
+                </span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
     </div>
   );
 };

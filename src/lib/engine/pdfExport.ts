@@ -1,6 +1,8 @@
 import { WorkflowState } from '@/types';
 import { calculateCurrentCost, calculateFutureCost, calculateConfidence } from './calculationEngine';
 import { evaluateAllPilotMetrics } from './pilotEngine';
+import { effectiveClassification } from './effective';
+import { checkAssumptions } from './assumptionCheck';
 
 /**
  * Generates an executive PDF report and initiates browser download.
@@ -10,7 +12,7 @@ export async function generateExecutivePDF(workflow: WorkflowState): Promise<voi
 
   const current = calculateCurrentCost(workflow.identity);
   const future = calculateFutureCost(workflow.identity, workflow.tasks, workflow.scenarios.find((s) => s.isSelected), workflow.assumptions);
-  const confidence = calculateConfidence(workflow.identity, workflow.tasks, workflow.assumptions);
+  const confidence = calculateConfidence(workflow.identity, workflow.tasks, workflow.assumptions, { earlyEstimate: workflow.isEarlyEstimate });
   const evaluatedPilot = evaluateAllPilotMetrics(workflow.pilotMetrics);
 
   // Dynamic import of jsPDF to ensure client-side rendering
@@ -29,10 +31,10 @@ export async function generateExecutivePDF(workflow: WorkflowState): Promise<voi
   let y = margin;
 
   // Colors
-  const navy = [11, 19, 43];
+  const navy = [27, 25, 52];
   const charcoal = [17, 24, 39];
   const slate = [100, 116, 139];
-  const gold = [200, 169, 107];
+  const gold = [242, 178, 51];
   const white = [255, 255, 255];
   const lightBg = [248, 250, 252];
 
@@ -81,6 +83,15 @@ export async function generateExecutivePDF(workflow: WorkflowState): Promise<voi
   doc.text(`EXECUTIVE BRIEFING & AI TRANSFORMATION DECISION`, margin + 6, y + 18);
   y += 30;
 
+  if (workflow.isEarlyEstimate) {
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.setTextColor(178, 110, 10);
+    const note = doc.splitTextToSize('EARLY ESTIMATE: this draft was built from a few answers. Recommendations, the roadmap and the numbers will change as real details are added.', contentWidth);
+    doc.text(note, margin, y);
+    y += note.length * 4 + 4;
+  }
+
   // 1. Executive Summary
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(12);
@@ -115,7 +126,7 @@ export async function generateExecutivePDF(workflow: WorkflowState): Promise<voi
   doc.text('CURRENT EFFORT', margin + 4, y + 6);
   doc.text('EST. TIME RELEASE', margin + colW + 4, y + 6);
   doc.text('EST. ANNUAL SAVINGS', margin + colW * 2 + 4, y + 6);
-  doc.text('RECOMMENDED DECISION', margin + colW * 3 + 4, y + 6);
+  doc.text('DECISION', margin + colW * 3 + 4, y + 6);
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(10);
@@ -125,7 +136,7 @@ export async function generateExecutivePDF(workflow: WorkflowState): Promise<voi
   doc.text(`$${(future.netAnnualBenefitMin / 1000).toFixed(0)}k – $${(future.netAnnualBenefitMax / 1000).toFixed(0)}k`, margin + colW * 2 + 4, y + 14);
 
   doc.setTextColor(gold[0], gold[1], gold[2]);
-  doc.text(workflow.finalDecision.selectedOutcome, margin + colW * 3 + 4, y + 14);
+  doc.text(workflow.finalDecision.decidedAt ? workflow.finalDecision.selectedOutcome : 'NOT DECIDED YET', margin + colW * 3 + 4, y + 14);
   y += 28;
 
   // 2. Workflow Overview & Intake
@@ -327,12 +338,65 @@ export async function generateExecutivePDF(workflow: WorkflowState): Promise<voi
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(10);
   doc.setTextColor(gold[0], gold[1], gold[2]);
-  doc.text(`EXECUTIVE DECISION: ${workflow.finalDecision.selectedOutcome}`, margin + 6, y + 7);
+  doc.text(workflow.finalDecision.decidedAt ? `EXECUTIVE DECISION: ${workflow.finalDecision.selectedOutcome}` : 'EXECUTIVE DECISION: NOT DECIDED YET', margin + 6, y + 7);
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);
   doc.setTextColor(white[0], white[1], white[2]);
-  doc.text(`Authorized by: ${workflow.finalDecision.decidedBy} | Date: ${new Date(workflow.finalDecision.decidedAt).toLocaleDateString()}`, margin + 6, y + 13);
+  doc.text(`Authorized by: ${workflow.finalDecision.decidedBy || 'not yet decided'} | Date: ${workflow.finalDecision.decidedAt ? new Date(workflow.finalDecision.decidedAt).toLocaleDateString() : 'not yet decided'}`, margin + 6, y + 13);
   y += 24;
+
+  // 7. People, skills and controls
+  const heading = (title: string) => {
+    checkPageBreak(30);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(12);
+    doc.setTextColor(navy[0], navy[1], navy[2]);
+    doc.text(title, margin, y);
+    y += 4;
+    doc.line(margin, y, margin + 50, y);
+    y += 6;
+  };
+  const lines = (text: string, bold = false, size = 8.5) => {
+    doc.setFont('helvetica', bold ? 'bold' : 'normal');
+    doc.setFontSize(size);
+    doc.setTextColor(charcoal[0], charcoal[1], charcoal[2]);
+    const split = doc.splitTextToSize(text, contentWidth);
+    checkPageBreak(split.length * 4.2 + 2);
+    doc.text(split, margin, y);
+    y += split.length * 4.2 + 1.5;
+  };
+
+  const plan = workflow.changePlan ?? [];
+  heading('7. PEOPLE, SKILLS AND CONTROLS');
+  if (plan.length === 0) lines('No task changes are planned yet.');
+  plan.forEach((c) => {
+    const t = workflow.tasks.find((x) => x.id === c.taskId);
+    if (!t) return;
+    lines(`Step ${t.stepNumber}: ${t.name} (${effectiveClassification(t)})`, true, 9);
+    lines(`Owners: business, ${c.businessOwner}; technical, ${c.technicalOwner}`);
+    if (c.skillsNeeded.length) lines(`Skills: ${c.skillsNeeded.join('; ')}`);
+    c.controls.forEach((k) => lines(`- ${k.area}: ${k.text}`));
+    lines(`Testing: ${c.testingRequired} Approval: ${c.approvalRequired}`);
+    const open = c.prerequisites.filter((p) => !p.met);
+    if (open.length) lines(`Missing prerequisites: ${open.map((p) => p.text).join('; ')}`);
+    y += 2;
+  });
+  lines('Controls are prompts to check against your own policies. This report makes no claim of regulatory compliance.', false, 7.5);
+  y += 4;
+
+  // 8. What is confirmed, assumed and missing
+  heading('8. CONFIRMED, ASSUMED AND MISSING');
+  const count = (k: 'user' | 'template' | 'estimate') => workflow.assumptions.filter((a) => (a.provenance ?? 'template') === k).length;
+  const unchecked = workflow.tasks.filter((t) => t.needsReview).length;
+  const openPre = plan.reduce((n, c) => n + c.prerequisites.filter((p) => !p.met).length, 0);
+  const unrecorded = workflow.pilotMetrics.filter((m) => m.recorded === false).length;
+  lines(`Facts you provided: ${count('user')} assumptions. Template assumptions: ${count('template')}. Product estimates: ${count('estimate')}.`);
+  lines(`Steps not yet confirmed by you: ${unchecked}. Steps marked "needs assessment": ${workflow.tasks.filter((t) => t.recommendation === 'NEEDS_ASSESSMENT').length}.`);
+  lines(`Prerequisites still missing: ${openPre}. Pilot measures with no result yet: ${unrecorded}.`);
+  const findings = checkAssumptions(workflow.pilotMetrics, workflow.assumptions).filter((f) => f.verdict === 'wrong');
+  if (findings.length) lines(`Assumptions the pilot showed to be wrong: ${findings.map((f) => f.label).join('; ')}.`);
+  if (workflow.finalDecision.evidenceGaps.length) lines(`Evidence gaps: ${workflow.finalDecision.evidenceGaps.join('; ')}`);
+  y += 4;
 
   // Trigger Save
   doc.save(`${workflow.identity.id}_executive_report.pdf`);

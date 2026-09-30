@@ -24,7 +24,7 @@ export const ScenarioComparisonView: React.FC<ScenarioComparisonViewProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
-              Step 3 of 7
+              Step 4 of 9
             </span>
             <span className="text-xs font-semibold text-slate-500">
               Future-State Options

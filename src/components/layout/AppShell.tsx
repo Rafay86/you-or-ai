@@ -12,26 +12,46 @@ interface AppShellProps {
   children: React.ReactNode;
 }
 
-// The seven stages are a real sequence, so they are numbered. Everything else is not.
+// The steps are a real sequence, so they are numbered. Everything else is not.
 const journey = [
-  { id: 'discover', label: 'Discover', hint: 'Describe the work' },
-  { id: 'tasks', label: 'Assess tasks', hint: 'Who does each step' },
-  { id: 'future-state', label: 'Redesign', hint: 'Draw the new flow' },
+  { id: 'start', label: 'Begin', hint: 'Choose how to start' },
+  { id: 'current-state', label: 'Confirm the work', hint: 'How it really happens' },
+  { id: 'tasks', label: 'Who does what', hint: 'You, AI or both' },
+  { id: 'future-state', label: 'Redesign', hint: 'Today and proposed' },
+  { id: 'people', label: 'People and controls', hint: 'Skills, owners, checks' },
   { id: 'business-case', label: 'Business case', hint: 'What it is worth' },
-  { id: 'roadmap', label: 'Roadmap', hint: 'What happens when' },
+  { id: 'roadmap', label: 'Roadmap', hint: '30, 60, 90 days' },
   { id: 'pilot', label: 'Pilot', hint: 'Prove it small' },
-  { id: 'decision', label: 'Decide', hint: 'Go, adjust or stop' },
+  { id: 'decision', label: 'Decide', hint: 'Expand, improve or stop' },
 ];
 
 const beyond = [
-  { id: 'executive', label: 'Executive view' },
-  { id: 'governance', label: 'Governance' },
+  { id: 'executive', label: 'Executive summary' },
+  { id: 'governance', label: 'Governance and risks' },
 ];
 
 const library = [
-  { id: 'templates', label: 'Templates' },
+  { id: 'discover', label: 'Workflow details' },
+  { id: 'projects', label: 'Saved projects' },
+  { id: 'templates', label: 'Industry library' },
   { id: 'settings', label: 'Settings' },
 ];
+
+/** A step counts as done when the evidence for it exists in the workspace, not because someone clicked past it. */
+function stepDone(id: string, w: WorkflowState): boolean {
+  const tasks = w.tasks;
+  switch (id) {
+    case 'start': return true;
+    case 'current-state': return tasks.length > 0 && w.reviewConfirmed !== false && !tasks.some((t) => t.needsReview);
+    case 'tasks': return tasks.length > 0 && !tasks.some((t) => t.recommendation === 'NEEDS_ASSESSMENT');
+    case 'people': return (w.changePlan ?? []).length > 0 && (w.changePlan ?? []).every((c) => c.prerequisites.every((p) => p.met));
+    case 'business-case': return w.assumptions.length > 0 && w.assumptions.every((a) => a.provenance !== 'estimate');
+    case 'roadmap': return w.roadmap.length > 0 && w.roadmap.every((r) => r.status === 'Complete');
+    case 'pilot': return w.pilotMetrics.length > 0 && w.pilotMetrics.every((m) => m.recorded !== false);
+    case 'decision': return !!w.finalDecision?.decidedAt;
+    default: return false;
+  }
+}
 
 export const AppShell: React.FC<AppShellProps> = ({ workflow, activeView, onNavigate, onReset, children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -82,12 +102,12 @@ export const AppShell: React.FC<AppShellProps> = ({ workflow, activeView, onNavi
             Home
           </button>
 
-          <p className="px-3 pt-6 pb-2 text-[11px] font-medium text-navy-600/80">The seven steps</p>
+          <p className="px-3 pt-6 pb-2 text-[11px] font-medium text-navy-600/80">The nine steps</p>
           <ol className="relative">
             <span className="absolute left-[21px] top-4 bottom-4 w-px bg-navy-100" aria-hidden="true" />
             {journey.map((s, i) => {
               const active = activeView === s.id;
-              const done = workflow.activeStep > i + 1;
+              const done = stepDone(s.id, workflow);
               return (
                 <li key={s.id} className="relative">
                   <button onClick={() => go(s.id)} className={`${linkBase} ${linkState(active)}`}>

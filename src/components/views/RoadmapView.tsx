@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { WorkflowState, RoadmapItem, RoadmapStatus } from '@/types';
 import { checkTaskDependencies, validateStatusTransition } from '@/lib/engine/dependencyEngine';
 import { StatusBadge } from '../common/Badge';
+import { EarlyEstimateBanner } from '../common/Provenance';
+import { roadmapIsStale } from '@/lib/engine/roadmapEngine';
 import { Calendar, Lock, Unlock, CheckCircle2, Clock, AlertTriangle, X } from 'lucide-react';
 
 interface RoadmapViewProps {
   workflow: WorkflowState;
   onUpdateRoadmap: (updatedRoadmap: RoadmapItem[]) => void;
+  onRebuildRoadmap?: () => void;
   onNavigate: (viewId: string) => void;
 }
 
 export const RoadmapView: React.FC<RoadmapViewProps> = ({
   workflow,
   onUpdateRoadmap,
+  onRebuildRoadmap,
   onNavigate,
 }) => {
   const [items, setItems] = useState<RoadmapItem[]>(workflow.roadmap);
+  useEffect(() => setItems(workflow.roadmap), [workflow.roadmap]);
   const [blockedAlertModal, setBlockedAlertModal] = useState<{
     item: RoadmapItem;
     blockingReason: string;
@@ -72,7 +77,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
-              Step 5 of 7
+              Step 7 of 9
             </span>
             <span className="text-xs font-semibold text-slate-500">
               Dependency Graph Engine
@@ -84,13 +89,31 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
           </p>
         </div>
 
+        <div className="flex flex-wrap gap-2">
+        {onRebuildRoadmap && (
+          <button
+            onClick={() => { if (window.confirm('Rebuild the roadmap from the current recommended changes? Your edits to roadmap items will be replaced.')) onRebuildRoadmap(); }}
+            className="px-5 py-2.5 bg-white border border-navy-100 hover:border-navy-900 text-navy-900 font-semibold rounded-xl text-xs transition whitespace-nowrap"
+          >
+            Rebuild from changes
+          </button>
+        )}
         <button
           onClick={() => onNavigate('pilot')}
           className="px-5 py-2.5 bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold rounded-xl text-xs transition shadow-xs whitespace-nowrap"
         >
           Pilot Tracking Dashboard →
         </button>
+        </div>
       </div>
+
+      {workflow.isEarlyEstimate && <EarlyEstimateBanner onFix={() => onNavigate('current-state')} />}
+
+      {roadmapIsStale(workflow.changePlan ?? [], workflow.roadmap) && (
+        <div role="status" className="rounded-xl border border-gold-200 bg-gold-50 px-4 py-3 text-sm text-gold-800">
+          Tasks or decisions have changed since this roadmap was built. Use “Rebuild from changes” so it follows the current plan.
+        </div>
+      )}
 
       {/* 30/60/90 Kanban Board Columns */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

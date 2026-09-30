@@ -153,7 +153,8 @@ export function calculateFutureCost(
 export function calculateConfidence(
   identity: WorkflowIdentity,
   tasks: Task[],
-  assumptions: BusinessCaseAssumption[] = []
+  assumptions: BusinessCaseAssumption[] = [],
+  opts: { earlyEstimate?: boolean } = {}
 ): ConfidenceAssessment {
   const checklist = [
     { item: 'Workflow volume & processing time defined', satisfied: (identity.volume?.itemsPerWeek ?? 0) > 0 },
@@ -161,6 +162,11 @@ export function calculateConfidence(
     { item: 'All core workflow tasks classified', satisfied: tasks.length > 0 && tasks.every((t) => t.recommendation !== 'NEEDS_ASSESSMENT') },
     { item: 'Task overrides and decision trace reviewed', satisfied: tasks.some((t) => t.override !== undefined) },
     { item: 'Future-state business case assumptions calibrated', satisfied: assumptions.length >= 3 },
+    {
+      item: 'Hours and hourly cost are your own figures, not placeholders',
+      satisfied: !assumptions.some((a) => (a.id === 'hourly_cost' || a.id === 'current_monthly_hours') && a.provenance === 'estimate'),
+    },
+    { item: 'Built from full detail, not an early estimate', satisfied: !opts.earlyEstimate },
   ];
 
   const satisfiedCount = checklist.filter((c) => c.satisfied).length;
@@ -169,6 +175,9 @@ export function calculateConfidence(
   let level: ConfidenceLevel = 'Low';
   if (score >= 80) level = 'High';
   else if (score >= 50) level = 'Medium';
+  // Placeholders or an early estimate mean the numbers cannot be called High confidence, whatever the checklist score.
+  const unproven = checklist.slice(-2).some((c) => !c.satisfied);
+  if (unproven && level === 'High') level = 'Medium';
 
   const missingInformation = checklist.filter((c) => !c.satisfied).map((c) => c.item);
 

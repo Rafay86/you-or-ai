@@ -12,8 +12,34 @@ export interface DecisionOverride {
   note?: string;
 }
 
+export type SourceKind = 'document' | 'template' | 'user';
+
+/** Where a piece of information came from. Uploaded items carry the page or section they were read from. */
+export interface InfoSource {
+  kind: SourceKind;
+  /** e.g. "Page 3" or "Section 4.2 Escalation" */
+  ref?: string;
+  excerpt?: string;
+}
+
 export interface Task {
   id: string;
+  /** Where this step came from. */
+  source?: InfoSource;
+  /** 'documented' = in the formal procedure; 'observed' = happens in practice but is not written down. */
+  origin?: 'documented' | 'observed';
+  expectedOutput?: string;
+  volume?: string;
+  timeHoursPerCycle?: number;
+  costNote?: string;
+  systems?: string[];
+  delays?: string;
+  handoffs?: string;
+  exceptions?: string;
+  /** Things the extractor or user flagged as unclear or missing. */
+  openQuestions?: string[];
+  /** True until the user has confirmed an extracted or drafted step. */
+  needsReview?: boolean;
   stepNumber: number;
   name: string;
   description: string;
@@ -119,8 +145,12 @@ export interface Scenario {
   isSelected: boolean;
 }
 
+export type Provenance = 'user' | 'template' | 'estimate';
+
 export interface BusinessCaseAssumption {
   id: string;
+  /** user = a fact the user supplied; template = from a starter; estimate = the product's own guess. */
+  provenance?: Provenance;
   name: string;
   category: 'Labor' | 'Volume' | 'Automation' | 'Implementation' | 'Operating';
   value: number;
@@ -148,6 +178,8 @@ export type MetricStatus = 'Achieved' | 'Partially achieved' | 'Not achieved' | 
 
 export interface PilotMetric {
   id: string;
+  /** false until the user enters a real result; unrecorded metrics never count as achieved. */
+  recorded?: boolean;
   name: string;
   unit: string;
   baseline: number;
@@ -162,6 +194,8 @@ export type GovernanceStatus = 'Not assessed' | 'In review' | 'Evidence provided
 
 export interface GovernanceItem {
   id: string;
+  /** The task and change this item exists for. */
+  taskId?: string;
   category: 'Data Sensitivity' | 'Human Oversight' | 'Testing Evidence' | 'Approvals';
   title: string;
   status: GovernanceStatus;
@@ -183,8 +217,45 @@ export interface FinalDecisionState {
   decidedAt: string;
 }
 
+export type ControlArea = 'Data' | 'Privacy' | 'Security' | 'Quality' | 'Operational';
+
+/** One proposed change to one task, with everything needed to make it real. */
+export interface ChangeItem {
+  id: string;
+  taskId: string;
+  summary: string;
+  rolesAffected: string[];
+  skillsNeeded: string[];
+  trainingActions: string[];
+  newResponsibilities: string[];
+  businessOwner: string;
+  technicalOwner: string;
+  controls: { area: ControlArea; text: string }[];
+  testingRequired: string;
+  approvalRequired: string;
+  openRisks: string[];
+  prerequisites: { id: string; text: string; met: boolean }[];
+}
+
+export type StartMode = 'quick-start' | 'upload' | 'library' | 'example';
+
+export const SCHEMA_VERSION = 2;
+
 export interface WorkflowState {
   id: string;
+  schemaVersion?: number;
+  startMode?: StartMode;
+  /** Quick Start drafts are labelled as early estimates until more detail is supplied. */
+  isEarlyEstimate?: boolean;
+  /** Uploaded workflows must be reviewed and confirmed before analysis proceeds. */
+  reviewConfirmed?: boolean;
+  /** Name of the uploaded file, kept for provenance; the contents are never stored beyond extracted steps. */
+  sourceDocumentName?: string;
+  changePlan?: ChangeItem[];
+  /** True once the user has hand-edited the redesign canvas, so decisions no longer rebuild it automatically. */
+  canvasEdited?: boolean;
+  /** Notes carried over from a library starter: things to verify, AI ideas and suggested measures. */
+  guidance?: { source: string; questionsToVerify: string[]; aiOpportunities: string[]; measures: string[] };
   identity: WorkflowIdentity;
   tasks: Task[];
   decisionTrace: DecisionOverride[];

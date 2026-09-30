@@ -78,7 +78,7 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
-              Step 1 of 7
+              Workflow details
             </span>
             {savedSuccess && (
               <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded animate-in fade-in">

@@ -1,3 +1,4 @@
+import { ProvenanceBadge } from './Provenance';
 import React, { useState } from 'react';
 import { BusinessCaseAssumption } from '@/types';
 import { Sliders, Check, RotateCcw, X } from 'lucide-react';
@@ -59,6 +60,7 @@ export const AssumptionPanel: React.FC<AssumptionPanelProps> = ({
                     <span className="text-[10px] font-bold text-slate-500 bg-slate-200 px-2 py-0.5 rounded">
                       {ass.category}
                     </span>
+                    <ProvenanceBadge value={ass.provenance} />
                     <h4 className="text-sm font-bold text-slate-900 mt-1">{ass.name}</h4>
                   </div>
                   <div className="flex items-center gap-2">

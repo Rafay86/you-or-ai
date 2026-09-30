@@ -16,7 +16,14 @@ import { PilotView } from '@/components/views/PilotView';
 import { FinalDecisionView } from '@/components/views/FinalDecisionView';
 import { ExecutiveView } from '@/components/views/ExecutiveView';
 import { GovernanceView } from '@/components/views/GovernanceView';
-import { TemplatesView } from '@/components/views/TemplatesView';
+import { StartView } from '@/components/views/StartView';
+import { CurrentStateView } from '@/components/views/CurrentStateView';
+import { PeopleControlsView } from '@/components/views/PeopleControlsView';
+import { ProjectsView } from '@/components/views/ProjectsView';
+import { refreshChangePlan } from '@/lib/engine/changePlanEngine';
+import { generateRoadmap } from '@/lib/engine/roadmapEngine';
+import { buildCanvas } from '@/lib/engine/workflowBuilder';
+import { ChangeItem } from '@/types';
 import { SettingsView } from '@/components/views/SettingsView';
 
 export default function StudioApp() {
@@ -54,14 +61,6 @@ export default function StudioApp() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSelectTemplate = (id: string) => {
-    db.setActiveWorkflowId(id);
-    setActiveWorkflowId(id);
-    const loaded = db.loadWorkflow(id);
-    setWorkflow(loaded);
-    setActiveView('overview');
-  };
-
   const handleResetData = () => {
     const reset = db.resetToSeedData(activeWorkflowId);
     setWorkflow(reset);
@@ -74,7 +73,60 @@ export default function StudioApp() {
   };
 
   const handleUpdateTasks = (tasks: Task[]) => {
-    updateAndSaveWorkflow((prev) => ({ ...prev, tasks }));
+    updateAndSaveWorkflow((prev) => ({
+      ...prev,
+      tasks,
+      changePlan: refreshChangePlan(prev.changePlan, tasks, prev.identity),
+      // The redesign follows the decisions until someone edits it by hand.
+      canvas: prev.canvasEdited ? prev.canvas : buildCanvas(tasks),
+    }));
+  };
+
+  const handleCreateProject = (w: WorkflowState) => {
+    db.createProject(w);
+    setActiveWorkflowId(w.id);
+    setWorkflow(w);
+    setActiveView(w.startMode === 'example' ? 'overview' : 'current-state');
+    window.scrollTo({ top: 0 });
+  };
+
+  const handleOpenProject = (id: string) => {
+    db.setActiveWorkflowId(id);
+    setActiveWorkflowId(id);
+    setWorkflow(db.loadWorkflow(id));
+    setActiveView('overview');
+  };
+
+  const handleDeleteProject = (id: string) => {
+    db.deleteProject(id);
+    if (id === activeWorkflowId) handleOpenProject('weekly-management-report');
+  };
+
+  const handleRestoreVersion = (versionId: string) => {
+    const restored = db.restoreVersion(activeWorkflowId, versionId);
+    if (restored) setWorkflow(restored);
+  };
+
+  /** Marking a prerequisite as met also completes the roadmap action that was waiting on it. */
+  const handleUpdateChangePlan = (changePlan: ChangeItem[]) => {
+    updateAndSaveWorkflow((prev) => {
+      const done = new Map<string, boolean>();
+      changePlan.forEach((c) => c.prerequisites.forEach((p) => done.set(`rm-pre-${p.id}`, p.met)));
+      const roadmap = prev.roadmap.map((r) => {
+        const met = done.get(r.id);
+        if (met === undefined) return r;
+        if (met) return { ...r, status: 'Complete' as const };
+        return r.status === 'Complete' ? { ...r, status: 'Not started' as const } : r;
+      });
+      return { ...prev, changePlan, roadmap };
+    });
+  };
+
+  const handleRebuildRoadmap = () => {
+    updateAndSaveWorkflow((prev) => ({
+      ...prev,
+      roadmap: generateRoadmap(prev.changePlan ?? [], prev.tasks, prev.identity),
+    }));
   };
 
   const handleAddDecisionTrace = (override: DecisionOverride) => {
@@ -85,7 +137,11 @@ export default function StudioApp() {
   };
 
   const handleUpdateCanvas = (canvas: WorkflowState['canvas']) => {
-    updateAndSaveWorkflow((prev) => ({ ...prev, canvas }));
+    updateAndSaveWorkflow((prev) => ({ ...prev, canvas, canvasEdited: true }));
+  };
+
+  const handleRebuildCanvas = () => {
+    updateAndSaveWorkflow((prev) => ({ ...prev, canvas: buildCanvas(prev.tasks), canvasEdited: false }));
   };
 
   const handleSelectScenario = (scenarioId: 'scenario-a' | 'scenario-b') => {
@@ -101,7 +157,7 @@ export default function StudioApp() {
   const handleUpdateAssumption = (id: string, value: number) => {
     updateAndSaveWorkflow((prev) => ({
       ...prev,
-      assumptions: prev.assumptions.map((a) => (a.id === id ? { ...a, value } : a)),
+      assumptions: prev.assumptions.map((a) => (a.id === id ? { ...a, value, provenance: 'user' as const } : a)),
     }));
   };
 
@@ -140,7 +196,6 @@ export default function StudioApp() {
         <OverviewView
           workflow={workflow}
           onNavigate={handleNavigate}
-          onSelectTemplate={handleSelectTemplate}
         />
       )}
 
@@ -166,6 +221,7 @@ export default function StudioApp() {
         <FutureStateView
           workflow={workflow}
           onUpdateCanvas={handleUpdateCanvas}
+          onRebuildCanvas={handleRebuildCanvas}
           onNavigate={handleNavigate}
         />
       )}
@@ -191,6 +247,7 @@ export default function StudioApp() {
         <RoadmapView
           workflow={workflow}
           onUpdateRoadmap={handleUpdateRoadmap}
+          onRebuildRoadmap={handleRebuildRoadmap}
           onNavigate={handleNavigate}
         />
       )}
@@ -223,12 +280,19 @@ export default function StudioApp() {
         />
       )}
 
-      {activeView === 'templates' && (
-        <TemplatesView
-          activeWorkflowId={activeWorkflowId}
-          onSelectTemplate={handleSelectTemplate}
-          onNavigate={handleNavigate}
-        />
+      {activeView === 'start' && <StartView onCreate={handleCreateProject} onNavigate={handleNavigate} />}
+      {activeView === 'templates' && <StartView key="library" initialMode="library" onCreate={handleCreateProject} onNavigate={handleNavigate} />}
+
+      {activeView === 'current-state' && (
+        <CurrentStateView workflow={workflow} onUpdateTasks={handleUpdateTasks} onNavigate={handleNavigate} />
+      )}
+
+      {activeView === 'people' && (
+        <PeopleControlsView workflow={workflow} onUpdateChangePlan={handleUpdateChangePlan} onNavigate={handleNavigate} />
+      )}
+
+      {activeView === 'projects' && (
+        <ProjectsView workflow={workflow} onOpen={handleOpenProject} onDelete={handleDeleteProject} onRestore={handleRestoreVersion} onNavigate={handleNavigate} />
       )}
 
       {activeView === 'settings' && (

@@ -28,7 +28,7 @@ export function evaluatePilotMetric(metric: PilotMetric): EvaluatedMetric {
 
   let status: MetricStatus = 'Insufficient evidence';
 
-  if (actual === 0 && baseline === 0) {
+  if (metric.recorded === false || (actual === 0 && baseline === 0)) {
     status = 'Insufficient evidence';
   } else if (isReduction) {
     // Lower is better (e.g. baseline 42h, target 28-32h, actual 31h)

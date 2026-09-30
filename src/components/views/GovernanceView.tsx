@@ -67,6 +67,34 @@ export const GovernanceView: React.FC<GovernanceViewProps> = ({
         </div>
       </div>
 
+      {/* Open risks and missing prerequisites, per task */}
+      {(() => {
+        const plan = workflow.changePlan ?? [];
+        const rows = plan
+          .map((c) => ({ c, task: workflow.tasks.find((t) => t.id === c.taskId), open: c.prerequisites.filter((p) => !p.met) }))
+          .filter((r) => r.task && (r.c.openRisks.length > 0 || r.open.length > 0));
+        return (
+          <section className="bg-white p-6 rounded-2xl border border-slate-200 space-y-3">
+            <h2 className="font-display text-xl font-semibold">Open risks and missing prerequisites</h2>
+            {rows.length === 0 ? (
+              <p className="text-sm text-slate-600">None recorded.</p>
+            ) : (
+              <ul className="space-y-3 text-sm">
+                {rows.map(({ c, task, open }) => (
+                  <li key={c.id}>
+                    <p className="font-medium">Step {task!.stepNumber}: {task!.name}</p>
+                    <ul className="list-disc pl-5 text-slate-700">
+                      {open.map((p) => <li key={p.id} className="text-status-redText">Missing: {p.text}</li>)}
+                      {c.openRisks.map((r) => <li key={r}>{r}</li>)}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        );
+      })()}
+
       {/* Categories Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {categories.map((cat) => {
@@ -85,7 +113,10 @@ export const GovernanceView: React.FC<GovernanceViewProps> = ({
                 {catItems.map((item) => (
                   <div key={item.id} className="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-2 text-xs">
                     <div className="flex items-start justify-between gap-2">
-                      <h4 className="font-bold text-slate-900">{item.title}</h4>
+                      <div>
+                        <h4 className="font-bold text-slate-900">{item.title}</h4>
+                        {item.taskId && (() => { const t = workflow.tasks.find((x) => x.id === item.taskId); return t ? <p className="text-[11px] text-slate-500 mt-0.5">For step {t.stepNumber}: {t.name}</p> : null; })()}
+                      </div>
                       <select
                         value={item.status}
                         onChange={(e) => handleStatusChange(item.id, e.target.value as GovernanceStatus)}

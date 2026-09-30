@@ -29,7 +29,7 @@ export const BusinessCaseView: React.FC<BusinessCaseViewProps> = ({
     selectedScenario,
     workflow.assumptions
   );
-  const confidence = calculateConfidence(workflow.identity, workflow.tasks, workflow.assumptions);
+  const confidence = calculateConfidence(workflow.identity, workflow.tasks, workflow.assumptions, { earlyEstimate: workflow.isEarlyEstimate });
 
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
@@ -38,7 +38,7 @@ export const BusinessCaseView: React.FC<BusinessCaseViewProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
-              Step 4 of 7
+              Step 6 of 9
             </span>
             <span className="text-xs font-semibold text-slate-500">
               Deterministic Mathematical Model

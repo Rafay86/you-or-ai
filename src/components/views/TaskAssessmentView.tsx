@@ -37,7 +37,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
   const [newClassification, setNewClassification] = useState<TaskClassification>('BOTH');
   const [overrideReason, setOverrideReason] = useState('');
   const [overrideNote, setOverrideNote] = useState('');
-  const [overrideUser, setOverrideUser] = useState('Priya Sharma (VP Ops)');
+  const [overrideUser, setOverrideUser] = useState('');
 
   const handleSelectTask = (task: Task) => {
     setSelectedTask(task);
@@ -54,7 +54,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
 
   const handleSaveOverride = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedTask || !overrideReason.trim()) return;
+    if (!selectedTask || !overrideReason.trim() || !overrideUser.trim()) return;
 
     const previousRec = selectedTask.override
       ? selectedTask.override.newClassification
@@ -106,7 +106,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
-              Step 2 of 7
+              Step 3 of 9
             </span>
             <span className="text-xs font-semibold text-slate-500">
               {tasks.length} Workflow Tasks Evaluated
@@ -427,6 +427,8 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
                 <input
                   type="text"
                   value={overrideUser}
+                  required
+                  placeholder="Your name"
                   onChange={(e) => setOverrideUser(e.target.value)}
                   className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs"
                 />
