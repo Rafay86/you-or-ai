@@ -7,6 +7,7 @@ import { buildWorkflow, buildCanvas, canvasIsStale } from '../workflowBuilder';
 import { calculateConfidence } from '../calculationEngine';
 import { fromLibrary, fromQuickStart, validateQuickStart, parseSteps } from '../startFlows';
 import { checkAssumptions } from '../assumptionCheck';
+import { compareScenarios, scenarioHints } from '../scenarioCompare';
 import { generateFinalDecisionRecommendation } from '../finalDecisionEngine';
 import { evaluatePilotMetric } from '../pilotEngine';
 import { migrateWorkflow } from '../../storage/migrate';
@@ -248,5 +249,24 @@ describe('pilot: unrecorded metrics and wrong assumptions', () => {
     expect(checkAssumptions([{ ...metric, actual: 35, recorded: true }], assumptions)[0].verdict).toBe('wrong'); // saved 12.5% < 40%
     expect(checkAssumptions([{ ...metric, actual: 20, recorded: true }], assumptions)[0].verdict).toBe('held'); // saved 50%
     expect(checkAssumptions([{ ...metric, recorded: false }], assumptions)[0].verdict).toBe('no-evidence');
+  });
+});
+
+describe('scenario comparison', () => {
+  const w = migrateWorkflow(seed);
+  it('gives each scenario its own outcome, so they are not identical', () => {
+    const [a, b] = compareScenarios(w);
+    expect(a.hoursReleasedMonthly).toBeLessThan(b.hoursReleasedMonthly);
+    expect(a.netAnnual).not.toBe(b.netAnnual);
+    expect(b.implementationCost).toBeGreaterThan(a.implementationCost);
+  });
+  it('shows the downside if only 60% of the saving happens', () => {
+    const [, b] = compareScenarios(w);
+    expect(b.netAnnualIfSixtyPct).toBeLessThan(b.netAnnual);
+  });
+  it('leans cautious while prerequisites are missing and automated when none are', () => {
+    const open = fromQuickStart({ work: 'Invoice approval', who: 'AP team', steps: 'Receive invoice\nMatch to order\nApprove payment', problem: 'Slow', result: 'On time' });
+    expect(scenarioHints(open).some((h) => h.toward === 'cautious' && /prerequisite/.test(h.text))).toBe(true);
+    expect(scenarioHints(w).some((h) => h.toward === 'automated' && /prerequisites are in place/.test(h.text))).toBe(true);
   });
 });

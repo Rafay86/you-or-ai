@@ -47,38 +47,35 @@ export const PilotView: React.FC<PilotViewProps> = ({
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-navy-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+            <span className="text-sm text-navy-600">
               Step 8 of 9
             </span>
-            <span className="text-xs font-semibold text-slate-500">
-              Empirical Evidence Dashboard
-            </span>
           </div>
-          <h1 className="text-2xl font-semibold text-slate-900 mt-1">Pilot Results & Variance Analysis</h1>
-          <p className="text-xs text-slate-500">
+          <h1 className="font-display text-3xl font-semibold text-navy-900 mt-1">Pilot results</h1>
+          <p className="text-xs text-navy-600">
             Compare actual pilot outcomes against baseline metrics and target ranges.
           </p>
         </div>
 
         <button
           onClick={() => onNavigate('decision')}
-          className="px-5 py-2.5 bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold rounded-xl text-xs transition shadow-xs whitespace-nowrap"
+          className="px-5 py-2.5 bg-navy-900 hover:bg-navy-800 text-white font-semibold rounded-full text-sm transition shadow-xs whitespace-nowrap"
         >
           Executive Decision →
         </button>
       </div>
 
       {/* Visual Chart Comparison */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+      <div className="bg-white p-6 rounded-2xl border border-navy-100 shadow-xs space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+          <h3 className="text-sm font-bold text-navy-900 flex items-center gap-2">
             <BarChart3 className="h-4 w-4 text-navy-900" />
             Baseline vs Target vs Actual Pilot Results
           </h3>
-          <span className="text-xs text-slate-500">Updated from controlled 4-week pilot run</span>
+          <span className="text-xs text-navy-600">Updated from controlled 4-week pilot run</span>
         </div>
 
         <div className="h-72 w-full pt-4">
@@ -97,16 +94,16 @@ export const PilotView: React.FC<PilotViewProps> = ({
       </div>
 
       {/* Metrics Detailed Table */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+      <div className="bg-white rounded-2xl border border-navy-100 shadow-xs overflow-hidden">
         <div className="p-4 bg-navy-900 text-white font-bold text-xs flex items-center justify-between">
           <span>Pilot Metrics Evaluation Table</span>
-          <span>Click "Edit Actual" to record empirical pilot data</span>
+          <span>Click “Edit Actual” to record what really happened</span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+              <tr className="bg-navy-100 text-navy-700 font-bold border-b border-navy-100">
                 <th className="py-3 px-4">Metric Name</th>
                 <th className="py-3 px-3">Baseline</th>
                 <th className="py-3 px-3">Target Range</th>
@@ -121,12 +118,12 @@ export const PilotView: React.FC<PilotViewProps> = ({
                 const isEditing = editingMetricId === m.id;
 
                 return (
-                  <tr key={m.id} className="hover:bg-slate-50 transition">
-                    <td className="py-3 px-4 font-bold text-slate-900">{m.name}</td>
-                    <td className="py-3 px-3 text-slate-600">
+                  <tr key={m.id} className="hover:bg-navy-50 transition">
+                    <td className="py-3 px-4 font-bold text-navy-900">{m.name}</td>
+                    <td className="py-3 px-3 text-navy-700">
                       {m.baseline} {m.unit}
                     </td>
-                    <td className="py-3 px-3 text-slate-600">
+                    <td className="py-3 px-3 text-navy-700">
                       {m.targetMin}–{m.targetMax} {m.unit}
                     </td>
                     <td className="py-3 px-3">
@@ -138,17 +135,17 @@ export const PilotView: React.FC<PilotViewProps> = ({
                             onChange={(e) => setEditActual(parseFloat(e.target.value) || 0)}
                             className="w-20 px-2 py-1 border border-slate-300 rounded font-bold text-xs"
                           />
-                          <span className="text-slate-500 text-[11px]">{m.unit}</span>
+                          <span className="text-navy-600 text-[11px]">{m.unit}</span>
                         </div>
                       ) : (
-                        <span className="font-semibold text-slate-900">
-                          {m.recorded === false ? <span className="font-normal text-slate-500">Not recorded</span> : `${m.actual} ${m.unit}`}
+                        <span className="font-semibold text-navy-900">
+                          {m.recorded === false ? <span className="font-normal text-navy-600">Not recorded</span> : `${m.actual} ${m.unit}`}
                         </span>
                       )}
                     </td>
                     <td className="py-3 px-3 font-semibold">
                       {m.recorded === false ? (
-                        <span className="font-normal text-slate-500">—</span>
+                        <span className="font-normal text-navy-600">—</span>
                       ) : (
                       <span
                         className={
@@ -179,7 +176,7 @@ export const PilotView: React.FC<PilotViewProps> = ({
                       ) : (
                         <button
                           onClick={() => handleStartEdit(m)}
-                          className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-[11px] font-medium flex items-center gap-1 ml-auto"
+                          className="px-2.5 py-1 bg-navy-100 hover:bg-slate-200 text-navy-700 rounded text-[11px] font-medium flex items-center gap-1 ml-auto"
                         >
                           <Edit3 className="h-3 w-3" />
                           Edit Actual

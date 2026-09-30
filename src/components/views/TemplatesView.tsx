@@ -17,12 +17,12 @@ export const TemplatesView: React.FC<TemplatesViewProps> = ({
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
       {/* Header */}
-      <div className="pb-4 border-b border-slate-200">
-        <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+      <div className="pb-4 border-b border-navy-100">
+        <span className="text-sm text-navy-600">
           Transformation Library
         </span>
-        <h1 className="text-2xl font-semibold text-slate-900 mt-1">Workflow Templates</h1>
-        <p className="text-xs text-slate-500">
+        <h1 className="font-display text-3xl font-semibold text-navy-900 mt-1">Workflow Templates</h1>
+        <p className="text-xs text-navy-600">
           Pre-configured workflow schemas with realistic example data for fast evaluation.
         </p>
       </div>
@@ -36,14 +36,14 @@ export const TemplatesView: React.FC<TemplatesViewProps> = ({
               className={`p-6 rounded-2xl border transition-all flex flex-col justify-between space-y-4 ${
                 isCurrent
                   ? 'bg-white border-navy-900 ring-2 ring-navy-900/10 shadow-lg'
-                  : 'bg-white border-slate-200 hover:border-slate-300 shadow-xs'
+                  : 'bg-white border-navy-100 hover:border-slate-300 shadow-xs'
               }`}
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span
                     className={`text-[10px] font-bold  px-2.5 py-1 rounded-md ${
-                      t.isImplemented ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'
+                      t.isImplemented ? 'bg-emerald-100 text-emerald-800' : 'bg-navy-100 text-navy-700'
                     }`}
                   >
                     {t.isImplemented ? 'Fully Functional Demo' : 'Illustrative Template'}
@@ -55,12 +55,12 @@ export const TemplatesView: React.FC<TemplatesViewProps> = ({
                   )}
                 </div>
 
-                <h3 className="text-lg font-bold text-slate-900">{t.title}</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">{t.description}</p>
+                <h3 className="text-lg font-bold text-navy-900">{t.title}</h3>
+                <p className="text-xs text-navy-700 leading-relaxed">{t.description}</p>
               </div>
 
-              <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-                <span className="text-xs text-slate-500">
+              <div className="pt-4 border-t border-navy-100 flex items-center justify-between">
+                <span className="text-xs text-navy-600">
                   {t.isImplemented ? '11 tasks • Seeded pilot data' : 'Sample schema'}
                 </span>
                 <button

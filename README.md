@@ -9,7 +9,7 @@ Everything runs in the browser with transparent rules. No API keys, no paid AI s
 ```bash
 npm install
 npm run dev        # http://localhost:3000
-npm test           # 56 tests
+npm test           # 59 tests
 npm run build      # production build
 ```
 
@@ -22,7 +22,7 @@ Node 18 or newer. No Docker needed.
 | 1 | **Begin** | Quick start (five questions), upload a PDF/Word/text procedure, or copy a starter from the industry library |
 | 2 | **Confirm the work** | Edit every step: output, owner, systems, volume, time, delays, handoffs, exceptions, judgment, sensitivity, error cost. Add steps that happen in practice but aren't documented. Each step shows its source |
 | 3 | **Who does what** | Rule engine recommends You / AI / Both / Needs Assessment with plain-language reasons. Overrides record who and why |
-| 4 | **Redesign** | Today and proposed side by side, plus a cautious and a more automated scenario |
+| 4 | **Redesign** | Today and proposed side by side, plus a scenario comparison (cautious vs more automated) with net benefit, payback, a 60%-of-saving downside, and pointers from your own workflow |
 | 5 | **People and controls** | One row per changed task: roles, skills, training, owners, controls, testing, approval, prerequisites, open risks |
 | 6 | **Business case** | Ranges, editable assumptions, each labelled as your fact, a template default, or a product estimate |
 | 7 | **Roadmap** | 30/60/90 days generated from the changes. Anything with an unmet prerequisite shows as blocked |
@@ -120,7 +120,7 @@ All fictional. None is presented as a real procedure or a regulatory requirement
 
 ## What was tested
 
-56 automated tests cover: decision rules including Needs Assessment and system access; the acceptance example; change-plan derivation; roadmap generation and blocked propagation; migration of old saves; Quick start validation; library contents; extraction from text, a real PDF and a real DOCX; upload validation; pilot and assumption checks; and PDF contents.
+59 automated tests cover: decision rules including Needs Assessment and system access; the acceptance example; change-plan derivation; roadmap generation and blocked propagation; migration of old saves; Quick start validation; library contents; extraction from text, a real PDF and a real DOCX; upload validation; pilot and assumption checks; scenario comparison and its hints; and PDF contents.
 
 Checked by hand in the browser, on a project created from the library: override, redesign, editing an assumption, prerequisites, roadmap rebuild and status change, pilot entry, decision, executive summary, governance, plus Quick start, upload of a real PDF (development and production builds), sample upload, all four failure paths (wrong type, fake PDF, oversize, empty), library copy, saved projects and versions, and loading a save that predates the new fields.
 

@@ -71,7 +71,7 @@ export const DecisionView: React.FC<DecisionViewProps> = ({
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-navy-100 shadow-xs">
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold bg-navy-100 text-navy-900 px-2.5 py-0.5 rounded">
@@ -79,7 +79,7 @@ export const DecisionView: React.FC<DecisionViewProps> = ({
             </span>
           </div>
           <h1 className="text-2xl font-semibold text-navy-900 mt-1">Executive Decision & Evidence Verification</h1>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-navy-600 mt-0.5">
             Rule-based evidence synthesis to decide whether to expand rollout, improve and retest, or stop.
           </p>
         </div>
@@ -161,11 +161,11 @@ export const DecisionView: React.FC<DecisionViewProps> = ({
       </div>
 
       {/* Executive Decision Override & Signoff Workspace */}
-      <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-6">
-        <div className="border-b border-slate-100 pb-4 flex items-center justify-between">
+      <div className="bg-white p-6 sm:p-8 rounded-2xl border border-navy-100 shadow-xs space-y-6">
+        <div className="border-b border-navy-100 pb-4 flex items-center justify-between">
           <div>
             <h3 className="text-lg font-bold text-navy-900">Executive Signoff & Override Controls</h3>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-navy-600">
               Select final decision outcome and record mandatory rationale if overriding rule-based recommendation.
             </p>
           </div>
@@ -183,12 +183,12 @@ export const DecisionView: React.FC<DecisionViewProps> = ({
                 className={`p-4 rounded-xl border-2 text-left transition flex flex-col justify-between ${
                   isSelected
                     ? 'border-navy-900 bg-navy-50/40 shadow-xs'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                    : 'border-navy-100 hover:border-slate-300 bg-white'
                 }`}
               >
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-slate-700">
+                    <span className="text-xs font-bold text-navy-700">
                       {outcome.replace(/_/g, ' ')}
                     </span>
                     {recommendation.recommendedOutcome === outcome && (
@@ -197,7 +197,7 @@ export const DecisionView: React.FC<DecisionViewProps> = ({
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-slate-600">
+                  <p className="text-xs text-navy-700">
                     {outcome === 'EXPAND' && 'Proceed with organizational rollout and scale.'}
                     {outcome === 'IMPROVE_AND_RETEST' && 'Address adoption gaps & run 2nd pilot iteration.'}
                     {outcome === 'STOP' && 'Discontinue deployment based on current evidence.'}
@@ -220,20 +220,20 @@ export const DecisionView: React.FC<DecisionViewProps> = ({
               value={overrideReason}
               onChange={(e) => setOverrideReason(e.target.value)}
               placeholder="Why are you overriding the recommendation? (e.g. Strategic alignment priorities supersede pilot adoption metrics)..."
-              className="w-full text-xs p-3 rounded-lg border border-amber-300 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full text-xs p-3 rounded-lg border border-amber-300 bg-white text-navy-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
           </div>
         )}
 
         {/* Decided By Input & Submit */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-slate-100">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-navy-100">
           <div className="flex items-center gap-3">
-            <label className="text-xs font-bold text-slate-700 whitespace-nowrap">Authorized By:</label>
+            <label className="text-xs font-bold text-navy-700 whitespace-nowrap">Authorized By:</label>
             <input
               type="text"
               value={decidedBy}
               onChange={(e) => setDecidedBy(e.target.value)}
-              className="px-3 py-1.5 text-xs font-semibold bg-slate-50 border border-slate-200 rounded-lg text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500"
+              className="px-3 py-1.5 text-xs font-semibold bg-navy-50 border border-navy-100 rounded-lg text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500"
             />
           </div>
 

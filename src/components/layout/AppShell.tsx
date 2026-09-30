@@ -26,6 +26,7 @@ const journey = [
 ];
 
 const beyond = [
+  { id: 'scenario-comparison', label: 'Compare scenarios' },
   { id: 'executive', label: 'Executive summary' },
   { id: 'governance', label: 'Governance and risks' },
 ];

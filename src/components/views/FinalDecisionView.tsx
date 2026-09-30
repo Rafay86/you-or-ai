@@ -48,25 +48,22 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-navy-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+            <span className="text-sm text-navy-600">
               Step 9 of 9
             </span>
-            <span className="text-xs font-semibold text-slate-500">
-              Evidence-Based Executive Gate
-            </span>
           </div>
-          <h1 className="text-2xl font-semibold text-slate-900 mt-1">Final Executive Decision</h1>
-          <p className="text-xs text-slate-500">
-            Synthesize pilot empirical evidence, open risks, and governance compliance before C-suite authorization.
+          <h1 className="font-display text-3xl font-semibold text-navy-900 mt-1">The decision</h1>
+          <p className="text-xs text-navy-600">
+            Weigh the pilot results, open risks and approvals, then record what was decided and by whom.
           </p>
         </div>
 
         <button
           onClick={() => onNavigate('executive')}
-          className="px-5 py-2.5 bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold rounded-xl text-xs transition shadow-xs whitespace-nowrap"
+          className="px-5 py-2.5 bg-navy-900 hover:bg-navy-800 text-white font-semibold rounded-full text-sm transition shadow-xs whitespace-nowrap"
         >
           View Executive Summary →
         </button>
@@ -86,7 +83,7 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
               setOverrideReason('');
               setOverrideModalOpen(true);
             }}
-            className="px-4 py-2 bg-gold-500 hover:bg-gold-400 text-navy-900 text-xs font-bold rounded-lg transition"
+            className="px-4 py-2 bg-navy-900 hover:bg-navy-800 text-white text-sm font-semibold rounded-full transition"
           >
             Override Decision Outcome
           </button>
@@ -144,12 +141,12 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
       {/* 3 Evidence Sections Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Evidence Summary */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
-          <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+        <div className="bg-white p-6 rounded-2xl border border-navy-100 shadow-xs space-y-4">
+          <h3 className="text-sm font-bold text-navy-900 flex items-center gap-2">
             <CheckCircle2 className="h-4 w-4 text-emerald-600" />
             Supporting Evidence ({assessment.evidenceSummary.length})
           </h3>
-          <ul className="space-y-2 text-xs text-slate-700">
+          <ul className="space-y-2 text-xs text-navy-700">
             {assessment.evidenceSummary.map((item, i) => (
               <li key={i} className="flex items-start gap-2 p-2 rounded bg-emerald-50/60 border border-emerald-100">
                 <span className="text-emerald-600 font-bold">•</span>
@@ -160,12 +157,12 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
         </div>
 
         {/* Open Risks */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
-          <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+        <div className="bg-white p-6 rounded-2xl border border-navy-100 shadow-xs space-y-4">
+          <h3 className="text-sm font-bold text-navy-900 flex items-center gap-2">
             <AlertTriangle className="h-4 w-4 text-amber-600" />
             Open Operational Risks ({assessment.openRisks.length})
           </h3>
-          <ul className="space-y-2 text-xs text-slate-700">
+          <ul className="space-y-2 text-xs text-navy-700">
             {assessment.openRisks.map((item, i) => (
               <li key={i} className="flex items-start gap-2 p-2 rounded bg-amber-50/60 border border-amber-100">
                 <span className="text-amber-600 font-bold">⚠</span>
@@ -176,12 +173,12 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
         </div>
 
         {/* Evidence Gaps */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
-          <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+        <div className="bg-white p-6 rounded-2xl border border-navy-100 shadow-xs space-y-4">
+          <h3 className="text-sm font-bold text-navy-900 flex items-center gap-2">
             <FileQuestion className="h-4 w-4 text-blue-600" />
             Evidence Gaps ({assessment.evidenceGaps.length})
           </h3>
-          <ul className="space-y-2 text-xs text-slate-700">
+          <ul className="space-y-2 text-xs text-navy-700">
             {assessment.evidenceGaps.map((item, i) => (
               <li key={i} className="flex items-start gap-2 p-2 rounded bg-blue-50/60 border border-blue-100">
                 <span className="text-blue-600 font-bold">?</span>
@@ -197,7 +194,7 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-900/60 backdrop-blur-xs p-4">
           <form
             onSubmit={handleSaveOverride}
-            className="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-lg overflow-hidden animate-in fade-in duration-200"
+            className="bg-white rounded-xl shadow-2xl border border-navy-100 w-full max-w-lg overflow-hidden animate-in fade-in duration-200"
           >
             <div className="px-6 py-4 bg-navy-900 text-white flex items-center justify-between">
               <h3 className="text-sm font-bold">Override Executive Decision</h3>
@@ -212,7 +209,7 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
 
             <div className="p-6 space-y-4 text-xs">
               <div>
-                <label className="block font-semibold text-slate-700 mb-1">Select Executive Outcome</label>
+                <label className="block font-semibold text-navy-700 mb-1">Select Executive Outcome</label>
                 <div className="space-y-2">
                   {(['EXPAND', 'IMPROVE_AND_RETEST', 'STOP'] as FinalDecisionOutcome[]).map((outcome) => (
                     <button
@@ -222,7 +219,7 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
                       className={`w-full p-3 rounded-lg border text-left font-bold transition ${
                         overrideOutcome === outcome
                           ? 'bg-navy-900 text-white border-navy-900'
-                          : 'bg-slate-50 border-slate-200 text-slate-800'
+                          : 'bg-navy-50 border-navy-100 text-navy-800'
                       }`}
                     >
                       {outcome === 'EXPAND' && 'EXPAND — Scale across broader organization'}
@@ -234,7 +231,7 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-700 mb-1">
+                <label className="block font-semibold text-navy-700 mb-1">
                   Reason for Leadership Decision <span className="text-red-600">*</span>
                 </label>
                 <textarea
@@ -248,7 +245,7 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-700 mb-1">Authorized By</label>
+                <label className="block font-semibold text-navy-700 mb-1">Authorized By</label>
                 <input
                   type="text"
                   value={decidedBy}
@@ -258,11 +255,11 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
               </div>
             </div>
 
-            <div className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex justify-end gap-3">
+            <div className="px-6 py-4 bg-navy-50 border-t border-navy-100 flex justify-end gap-3">
               <button
                 type="button"
                 onClick={() => setOverrideModalOpen(false)}
-                className="px-4 py-2 text-xs font-semibold text-slate-600"
+                className="px-4 py-2 text-xs font-semibold text-navy-700"
               >
                 Cancel
               </button>

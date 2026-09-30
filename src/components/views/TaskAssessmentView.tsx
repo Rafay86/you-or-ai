@@ -102,25 +102,25 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-navy-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+            <span className="text-sm text-navy-600">
               Step 3 of 9
             </span>
-            <span className="text-xs font-semibold text-slate-500">
+            <span className="text-xs font-semibold text-navy-600">
               {tasks.length} Workflow Tasks Evaluated
             </span>
           </div>
-          <h1 className="text-2xl font-semibold text-slate-900 mt-1">Task Classification Matrix</h1>
-          <p className="text-xs text-slate-500">
+          <h1 className="font-display text-3xl font-semibold text-navy-900 mt-1">Who should do each task</h1>
+          <p className="text-xs text-navy-600">
             Classify tasks into Human (YOU), AI-led (AI), or Human+AI (BOTH) using transparent rule criteria.
           </p>
         </div>
 
         <button
           onClick={() => onNavigate('future-state')}
-          className="px-5 py-2.5 bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold rounded-xl text-xs transition shadow-xs whitespace-nowrap"
+          className="px-5 py-2.5 bg-navy-900 hover:bg-navy-800 text-white font-semibold rounded-full text-sm transition shadow-xs whitespace-nowrap"
         >
           Redesign Workflow Canvas →
         </button>
@@ -139,7 +139,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Task Matrix Table */}
         <div className={selectedTask ? 'lg:col-span-7 transition-all' : 'lg:col-span-12 transition-all'}>
-          <div className="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
+          <div className="bg-white rounded-xl border border-navy-100 shadow-xs overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs min-w-[640px]">
                 <thead>
@@ -165,38 +165,42 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
                       <tr
                         key={task.id}
                         onClick={() => handleSelectTask(task)}
-                        className={`cursor-pointer transition hover:bg-slate-50 ${
+                        className={`cursor-pointer transition hover:bg-navy-50 ${
                           isSelected ? 'bg-amber-50/80 border-l-4 border-gold-500' : ''
                         }`}
                       >
-                        <td className="py-3 px-3 text-center text-slate-500 font-bold">
+                        <td className="py-3 px-3 text-center text-navy-600 font-bold">
                           {task.stepNumber}
                         </td>
-                        <td className="py-3 px-4 font-bold text-slate-900">
+                        <td className="py-3 px-4 font-bold text-navy-900">
                           <div>{task.name}</div>
-                          <div className="text-[11px] text-slate-500 font-normal line-clamp-1">
+                          <div className="text-[11px] text-navy-600 font-normal line-clamp-1">
                             {task.description}
                           </div>
+                          {/* On a phone the Recommendation column is scrolled off, so repeat the verdict here. */}
+                          <div className="mt-1.5 md:hidden">
+                            <RecommendationBadge type={finalClassification} size="sm" isOverride={!!task.override} />
+                          </div>
                         </td>
-                        <td className="py-3 px-3 text-slate-700 whitespace-nowrap">{task.currentOwner}</td>
+                        <td className="py-3 px-3 text-navy-700 whitespace-nowrap">{task.currentOwner}</td>
                         <td className="py-3 px-3">
                           <span
                             className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                               task.judgmentRequired === 'High'
                                 ? 'bg-amber-100 text-amber-900'
-                                : 'bg-slate-100 text-slate-700'
+                                : 'bg-navy-100 text-navy-700'
                             }`}
                           >
                             {task.judgmentRequired}
                           </span>
                         </td>
-                        <td className="py-3 px-3 text-slate-700 whitespace-nowrap">{task.dataReadiness}</td>
+                        <td className="py-3 px-3 text-navy-700 whitespace-nowrap">{task.dataReadiness}</td>
                         <td className="py-3 px-3">
                           <span
                             className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                               task.errorImpact === 'Critical' || task.errorImpact === 'High'
                                 ? 'bg-red-100 text-red-900'
-                                : 'bg-slate-100 text-slate-700'
+                                : 'bg-navy-100 text-navy-700'
                             }`}
                           >
                             {task.errorImpact}
@@ -223,29 +227,29 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
 
         {/* Right-side Detail Drawer Panel */}
         {selectedTask && (
-          <div className="lg:col-span-5 bg-white rounded-xl border border-slate-200 shadow-md p-6 space-y-6 sticky top-20 animate-in fade-in slide-in-from-right duration-200">
+          <div className="lg:col-span-5 bg-white rounded-xl border border-navy-100 shadow-md p-6 space-y-6 sticky top-20 animate-in fade-in slide-in-from-right duration-200">
             {/* Drawer Header */}
-            <div className="flex items-start justify-between border-b border-slate-200 pb-4">
+            <div className="flex items-start justify-between border-b border-navy-100 pb-4">
               <div>
-                <span className="text-[10px] font-bold text-slate-500">
+                <span className="text-[10px] font-bold text-navy-600">
                   Step {selectedTask.stepNumber} Details
                 </span>
-                <h3 className="text-lg font-bold text-slate-900 mt-0.5">{selectedTask.name}</h3>
-                <p className="text-xs text-slate-600 mt-1">{selectedTask.description}</p>
+                <h3 className="text-lg font-bold text-navy-900 mt-0.5">{selectedTask.name}</h3>
+                <p className="text-xs text-navy-700 mt-1">{selectedTask.description}</p>
               </div>
               <button
                 onClick={() => setSelectedTask(null)}
-                className="p-1 rounded-md text-slate-400 hover:bg-slate-100"
+                className="p-1 rounded-md text-slate-400 hover:bg-navy-100"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
             {/* Recommendation Display */}
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+            <div className="p-4 rounded-xl bg-navy-50 border border-navy-100 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-600 ">
-                  Engine Recommendation
+                <span className="text-xs font-bold text-navy-700 ">
+                  Recommendation
                 </span>
                 <RecommendationBadge
                   type={
@@ -261,7 +265,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
               {selectedTask.override && (
                 <div className="p-2.5 rounded bg-amber-50 border border-amber-200 text-xs text-amber-900 space-y-1">
                   <div className="font-bold">Active User Override Applied</div>
-                  <div className="text-slate-700">Reason: "{selectedTask.override.reason}"</div>
+                  <div className="text-navy-700">Reason: "{selectedTask.override.reason}"</div>
                 </div>
               )}
 
@@ -275,7 +279,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
 
                 <button
                   onClick={() => handleRunReassessment(selectedTask)}
-                  className="px-3 py-2 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 rounded-lg text-xs font-semibold transition"
+                  className="px-3 py-2 bg-white border border-slate-300 hover:bg-navy-100 text-navy-700 rounded-lg text-xs font-semibold transition"
                   title="Recalculate recommendation rules"
                 >
                   Re-evaluate
@@ -285,11 +289,11 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
 
             {/* Why? (Rationale) */}
             <div className="space-y-2">
-              <h4 className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+              <h4 className="text-xs font-bold text-navy-700 flex items-center gap-1.5">
                 <Info className="h-4 w-4 text-blue-600" />
                 Why? (Transparent Rule Rationale)
               </h4>
-              <ul className="space-y-1.5 text-xs text-slate-700 bg-slate-50 p-3 rounded-lg border border-slate-200">
+              <ul className="space-y-1.5 text-xs text-navy-700 bg-navy-50 p-3 rounded-lg border border-navy-100">
                 {selectedTask.reasons.map((r, i) => (
                   <li key={i} className="flex items-start gap-2">
                     <span className="text-blue-600 font-bold">•</span>
@@ -319,7 +323,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
 
             {/* Suggested Role Split */}
             <div className="space-y-3 pt-2">
-              <h4 className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+              <h4 className="text-xs font-bold text-navy-900 flex items-center gap-1.5">
                 <SlidersHorizontal className="h-4 w-4 text-navy-900" />
                 Suggested Role Split (Human + AI)
               </h4>
@@ -364,7 +368,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-900/60 backdrop-blur-xs p-4">
           <form
             onSubmit={handleSaveOverride}
-            className="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-lg overflow-hidden animate-in fade-in duration-200"
+            className="bg-white rounded-xl shadow-2xl border border-navy-100 w-full max-w-lg overflow-hidden animate-in fade-in duration-200"
           >
             <div className="px-6 py-4 bg-navy-900 text-white flex items-center justify-between">
               <div>
@@ -382,7 +386,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
 
             <div className="p-6 space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-semibold text-navy-700 mb-1">
                   New Classification
                 </label>
                 <div className="grid grid-cols-2 gap-2">
@@ -394,7 +398,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
                       className={`p-2.5 rounded-lg border text-xs font-bold text-left transition ${
                         newClassification === cls
                           ? 'border-navy-900 bg-navy-900 text-white shadow-xs'
-                          : 'border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-800'
+                          : 'border-navy-100 bg-navy-50 hover:bg-navy-100 text-navy-800'
                       }`}
                     >
                       {cls === 'YOU' && 'YOU (Human)'}
@@ -407,7 +411,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-semibold text-navy-700 mb-1">
                   Why are you changing this recommendation? <span className="text-red-600">*</span>
                 </label>
                 <textarea
@@ -421,7 +425,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-semibold text-navy-700 mb-1">
                   User Authorizing Change
                 </label>
                 <input
@@ -435,7 +439,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-semibold text-navy-700 mb-1">
                   Additional Note (Optional)
                 </label>
                 <input
@@ -448,11 +452,11 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
               </div>
             </div>
 
-            <div className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-end gap-3">
+            <div className="px-6 py-4 bg-navy-50 border-t border-navy-100 flex items-center justify-end gap-3">
               <button
                 type="button"
                 onClick={() => setOverrideModalOpen(false)}
-                className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900"
+                className="px-4 py-2 text-xs font-semibold text-navy-700 hover:text-navy-900"
               >
                 Cancel
               </button>

@@ -11,48 +11,48 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ workflow, onResetDat
   return (
     <div className="space-y-8 animate-in fade-in duration-300 max-w-4xl">
       {/* Header */}
-      <div className="pb-4 border-b border-slate-200">
-        <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+      <div className="pb-4 border-b border-navy-100">
+        <span className="text-sm text-navy-600">
           Workspace Settings
         </span>
-        <h1 className="text-2xl font-semibold text-slate-900 mt-1">Studio Configuration & Architecture</h1>
-        <p className="text-xs text-slate-500">
+        <h1 className="font-display text-3xl font-semibold text-navy-900 mt-1">Settings</h1>
+        <p className="text-xs text-navy-600">
           Local data persistence, decision engine rules, and enterprise production architecture notes.
         </p>
       </div>
 
       <div className="space-y-6">
         {/* Storage & Engine Card */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
-          <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+        <div className="bg-white p-6 rounded-2xl border border-navy-100 shadow-xs space-y-4">
+          <h3 className="text-sm font-bold text-navy-900 flex items-center gap-2">
             <Cpu className="h-4 w-4 text-navy-900" />
             Decision Engine & Provider Architecture
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-              <span className="text-[10px] font-bold text-slate-500">Active Decision Provider</span>
-              <div className="font-semibold text-slate-900">Deterministic Rule Engine v1.0</div>
-              <p className="text-slate-600 text-[11px]">100% transparent rules. No paid LLM API required.</p>
+            <div className="p-4 rounded-xl bg-navy-50 border border-navy-100 space-y-1">
+              <span className="text-[10px] font-bold text-navy-600">Active Decision Provider</span>
+              <div className="font-semibold text-navy-900">Rule-based decisions</div>
+              <p className="text-navy-700 text-[11px]">100% transparent rules. No paid LLM API required.</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-              <span className="text-[10px] font-bold text-slate-500">Local Persistence Layer</span>
-              <div className="font-semibold text-slate-900">Local Database Repository</div>
-              <p className="text-slate-600 text-[11px]">Retains workspace, task overrides, and pilot data across refreshes.</p>
+            <div className="p-4 rounded-xl bg-navy-50 border border-navy-100 space-y-1">
+              <span className="text-[10px] font-bold text-navy-600">Local Persistence Layer</span>
+              <div className="font-semibold text-navy-900">Local Database Repository</div>
+              <p className="text-navy-700 text-[11px]">Retains workspace, task overrides, and pilot data across refreshes.</p>
             </div>
           </div>
         </div>
 
         {/* Data Reset Action */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
-          <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+        <div className="bg-white p-6 rounded-2xl border border-navy-100 shadow-xs space-y-4">
+          <h3 className="text-sm font-bold text-navy-900 flex items-center gap-2">
             <RotateCcw className="h-4 w-4 text-amber-600" />
             Reset Demo Data
           </h3>
 
           <div className="flex items-center justify-between">
-            <p className="text-xs text-slate-600 max-w-md">
+            <p className="text-xs text-navy-700 max-w-md">
               Reset the active workflow to initial factory seed data for the <strong>Weekly Management Report</strong>.
             </p>
             <button

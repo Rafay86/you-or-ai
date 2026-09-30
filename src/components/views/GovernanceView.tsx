@@ -32,19 +32,16 @@ export const GovernanceView: React.FC<GovernanceViewProps> = ({
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-navy-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
-              Governance & Oversight
-            </span>
-            <span className="text-xs font-semibold text-slate-500">
-              Enterprise Risk & Security Controls
+            <span className="text-sm text-navy-600">
+              Who checks what
             </span>
           </div>
-          <h1 className="text-2xl font-semibold text-slate-900 mt-1">Governance Workspace</h1>
-          <p className="text-xs text-slate-500">
-            Track data sensitivity, human oversight gates, synthetic test results, and multi-department owner signoffs.
+          <h1 className="font-display text-3xl font-semibold text-navy-900 mt-1">Governance and open risks</h1>
+          <p className="text-xs text-navy-600">
+            Who checks what, what evidence exists, and who has signed off.
           </p>
         </div>
 
@@ -52,7 +49,7 @@ export const GovernanceView: React.FC<GovernanceViewProps> = ({
           onClick={() => onNavigate('overview')}
           className="px-5 py-2.5 bg-navy-900 hover:bg-navy-800 text-white font-bold rounded-xl text-xs transition shadow-xs whitespace-nowrap"
         >
-          Return to Overview
+          Back to home
         </button>
       </div>
 
@@ -61,8 +58,8 @@ export const GovernanceView: React.FC<GovernanceViewProps> = ({
         <div className="flex items-center gap-2">
           <ShieldAlert className="h-4 w-4 text-amber-700 shrink-0" />
           <span>
-            <strong>Oversight Principle: </strong>
-            Status is displayed as explicit "Review status" (Not assessed, In review, Evidence provided, Approved by owner). "Compliant" is never claimed without signed audit evidence.
+            <strong>How to read status: </strong>
+            Each item is Not assessed, In review, Evidence provided, or Approved by its owner. Nothing is called “compliant”; that needs evidence you hold.
           </span>
         </div>
       </div>
@@ -74,16 +71,16 @@ export const GovernanceView: React.FC<GovernanceViewProps> = ({
           .map((c) => ({ c, task: workflow.tasks.find((t) => t.id === c.taskId), open: c.prerequisites.filter((p) => !p.met) }))
           .filter((r) => r.task && (r.c.openRisks.length > 0 || r.open.length > 0));
         return (
-          <section className="bg-white p-6 rounded-2xl border border-slate-200 space-y-3">
+          <section className="bg-white p-6 rounded-2xl border border-navy-100 space-y-3">
             <h2 className="font-display text-xl font-semibold">Open risks and missing prerequisites</h2>
             {rows.length === 0 ? (
-              <p className="text-sm text-slate-600">None recorded.</p>
+              <p className="text-sm text-navy-700">None recorded.</p>
             ) : (
               <ul className="space-y-3 text-sm">
                 {rows.map(({ c, task, open }) => (
                   <li key={c.id}>
                     <p className="font-medium">Step {task!.stepNumber}: {task!.name}</p>
-                    <ul className="list-disc pl-5 text-slate-700">
+                    <ul className="list-disc pl-5 text-navy-700">
                       {open.map((p) => <li key={p.id} className="text-status-redText">Missing: {p.text}</li>)}
                       {c.openRisks.map((r) => <li key={r}>{r}</li>)}
                     </ul>
@@ -101,8 +98,8 @@ export const GovernanceView: React.FC<GovernanceViewProps> = ({
           const catItems = govItems.filter((g) => g.category === cat);
 
           return (
-            <div key={cat} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div key={cat} className="bg-white p-6 rounded-2xl border border-navy-100 shadow-xs space-y-4">
+              <div className="flex items-center justify-between border-b border-navy-100 pb-3">
                 <h3 className="text-sm font-semibold text-navy-900 flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-gold-600" />
                   {cat} ({catItems.length})
@@ -111,11 +108,11 @@ export const GovernanceView: React.FC<GovernanceViewProps> = ({
 
               <div className="space-y-3">
                 {catItems.map((item) => (
-                  <div key={item.id} className="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-2 text-xs">
+                  <div key={item.id} className="p-4 rounded-xl border border-navy-100 bg-navy-50 space-y-2 text-xs">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <h4 className="font-bold text-slate-900">{item.title}</h4>
-                        {item.taskId && (() => { const t = workflow.tasks.find((x) => x.id === item.taskId); return t ? <p className="text-[11px] text-slate-500 mt-0.5">For step {t.stepNumber}: {t.name}</p> : null; })()}
+                        <h4 className="font-bold text-navy-900">{item.title}</h4>
+                        {item.taskId && (() => { const t = workflow.tasks.find((x) => x.id === item.taskId); return t ? <p className="text-[11px] text-navy-600 mt-0.5">For step {t.stepNumber}: {t.name}</p> : null; })()}
                       </div>
                       <select
                         value={item.status}
@@ -129,9 +126,9 @@ export const GovernanceView: React.FC<GovernanceViewProps> = ({
                       </select>
                     </div>
 
-                    <p className="text-slate-600 text-[11px]">{item.evidence}</p>
+                    <p className="text-navy-700 text-[11px]">{item.evidence}</p>
 
-                    <div className="pt-2 border-t border-slate-200/60 flex items-center justify-between text-[11px] text-slate-500">
+                    <div className="pt-2 border-t border-navy-100/60 flex items-center justify-between text-[11px] text-navy-600">
                       <span>Owner: {item.owner}</span>
                       <StatusBadge status={item.status} />
                     </div>

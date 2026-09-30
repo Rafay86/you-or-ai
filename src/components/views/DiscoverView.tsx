@@ -74,10 +74,10 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
   return (
     <form onSubmit={handleSave} className="space-y-8 animate-in fade-in duration-300 max-w-5xl">
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-navy-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+            <span className="text-sm text-navy-600">
               Workflow details
             </span>
             {savedSuccess && (
@@ -86,8 +86,8 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
               </span>
             )}
           </div>
-          <h1 className="text-2xl font-semibold text-slate-900 mt-1">Workflow Discovery & Intake</h1>
-          <p className="text-xs text-slate-500">Capture the operational context, volume, costs, systems, and key pain points of the target workflow.</p>
+          <h1 className="font-display text-3xl font-semibold text-navy-900 mt-1">About this workflow</h1>
+          <p className="text-xs text-navy-600">The owner, volume, cost, systems and pain points. The business case reads its hours and hourly cost from here.</p>
         </div>
 
         <div className="flex items-center gap-3">
@@ -96,28 +96,28 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
             className="px-5 py-2.5 bg-navy-900 hover:bg-navy-800 text-white font-bold rounded-xl text-xs transition shadow-sm flex items-center gap-2"
           >
             <Save className="h-4 w-4 text-gold-400" />
-            <span>Save Workflow Intake</span>
+            <span>Save details</span>
           </button>
           <button
             type="button"
             onClick={() => onNavigate('tasks')}
-            className="px-4 py-2.5 bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold rounded-xl text-xs transition shadow-sm"
+            className="px-4 py-2.5 bg-navy-900 hover:bg-navy-800 text-white font-semibold rounded-full text-sm transition shadow-sm"
           >
-            Proceed to Tasks →
+            Who does what →
           </button>
         </div>
       </div>
 
       {/* 1. Workflow Identity */}
-      <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
-        <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+      <div className="bg-white p-6 rounded-xl border border-navy-100 shadow-xs space-y-4">
+        <h3 className="text-base font-bold text-navy-900 flex items-center gap-2">
           <Activity className="h-4 w-4 text-navy-900" />
           Workflow Identity
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Workflow Name</label>
+            <label className="block text-xs font-semibold text-navy-700 mb-1">Workflow Name</label>
             <input
               type="text"
               value={formData.name}
@@ -128,7 +128,7 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Business Function</label>
+            <label className="block text-xs font-semibold text-navy-700 mb-1">Business Function</label>
             <input
               type="text"
               value={formData.businessFunction}
@@ -138,7 +138,7 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Workflow Owner</label>
+            <label className="block text-xs font-semibold text-navy-700 mb-1">Workflow Owner</label>
             <input
               type="text"
               value={formData.owner}
@@ -148,7 +148,7 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Execution Frequency</label>
+            <label className="block text-xs font-semibold text-navy-700 mb-1">Execution Frequency</label>
             <input
               type="text"
               value={formData.frequency}
@@ -158,7 +158,7 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
           </div>
 
           <div className="md:col-span-2">
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Purpose & Business Objective</label>
+            <label className="block text-xs font-semibold text-navy-700 mb-1">Purpose & Business Objective</label>
             <textarea
               rows={2}
               value={formData.purpose}
@@ -168,7 +168,7 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Start Trigger</label>
+            <label className="block text-xs font-semibold text-navy-700 mb-1">Start Trigger</label>
             <input
               type="text"
               value={formData.startTrigger}
@@ -178,7 +178,7 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">End Outcome</label>
+            <label className="block text-xs font-semibold text-navy-700 mb-1">End Outcome</label>
             <input
               type="text"
               value={formData.endOutcome}
@@ -191,15 +191,15 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
 
       {/* 2. People & Systems */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
-          <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+        <div className="bg-white p-6 rounded-xl border border-navy-100 shadow-xs space-y-4">
+          <h3 className="text-base font-bold text-navy-900 flex items-center gap-2">
             <Users className="h-4 w-4 text-navy-900" />
             People & Governance
           </h3>
 
           <div className="space-y-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Number of People Involved</label>
+              <label className="block text-xs font-semibold text-navy-700 mb-1">Number of People Involved</label>
               <input
                 type="number"
                 value={formData.people.numberOfPeople}
@@ -209,7 +209,7 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Teams Involved (comma separated)</label>
+              <label className="block text-xs font-semibold text-navy-700 mb-1">Teams Involved (comma separated)</label>
               <input
                 type="text"
                 value={formData.people.teamsInvolved.join(', ')}
@@ -226,8 +226,8 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
-          <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+        <div className="bg-white p-6 rounded-xl border border-navy-100 shadow-xs space-y-4">
+          <h3 className="text-base font-bold text-navy-900 flex items-center gap-2">
             <Database className="h-4 w-4 text-navy-900" />
             Systems & Tools
           </h3>
@@ -254,7 +254,7 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
               {formData.systems.map((sys) => (
                 <span
                   key={sys}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-300 text-slate-800 rounded-lg text-xs font-semibold"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-navy-100 border border-slate-300 text-navy-800 rounded-lg text-xs font-semibold"
                 >
                   {sys}
                   <button type="button" onClick={() => removeSystem(sys)} className="hover:text-red-600">
@@ -269,15 +269,15 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
 
       {/* 3. Volume & Labor Cost */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
-          <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+        <div className="bg-white p-6 rounded-xl border border-navy-100 shadow-xs space-y-4">
+          <h3 className="text-base font-bold text-navy-900 flex items-center gap-2">
             <Clock className="h-4 w-4 text-navy-900" />
             Volume & Frequency
           </h3>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Items per Week</label>
+              <label className="block text-xs font-semibold text-navy-700 mb-1">Items per Week</label>
               <input
                 type="number"
                 value={formData.volume.itemsPerWeek}
@@ -286,7 +286,7 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Items per Month</label>
+              <label className="block text-xs font-semibold text-navy-700 mb-1">Items per Month</label>
               <input
                 type="number"
                 value={formData.volume.itemsPerMonth}
@@ -297,15 +297,15 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
-          <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+        <div className="bg-white p-6 rounded-xl border border-navy-100 shadow-xs space-y-4">
+          <h3 className="text-base font-bold text-navy-900 flex items-center gap-2">
             <DollarSign className="h-4 w-4 text-navy-900" />
             Labor Cost Metrics
           </h3>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Hourly Cost ($/hr)</label>
+              <label className="block text-xs font-semibold text-navy-700 mb-1">Hourly Cost ($/hr)</label>
               <input
                 type="number"
                 value={formData.cost.estimatedHourlyCost}
@@ -314,7 +314,7 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Current Weekly Hours</label>
+              <label className="block text-xs font-semibold text-navy-700 mb-1">Current Weekly Hours</label>
               <input
                 type="number"
                 value={formData.cost.currentWeeklyHours}
@@ -327,8 +327,8 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
       </div>
 
       {/* 4. Pain Points */}
-      <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
-        <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+      <div className="bg-white p-6 rounded-xl border border-navy-100 shadow-xs space-y-4">
+        <h3 className="text-base font-bold text-navy-900 flex items-center gap-2">
           <AlertTriangle className="h-4 w-4 text-gold-600" />
           Workflow Pain Points & Friction Drivers
         </h3>
@@ -344,7 +344,7 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                   isSelected
                     ? 'bg-navy-900 text-white border border-navy-900 shadow-xs'
-                    : 'bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200'
+                    : 'bg-navy-100 text-navy-700 border border-navy-100 hover:bg-slate-200'
                 }`}
               >
                 {isSelected ? '✓ ' : '+ '}

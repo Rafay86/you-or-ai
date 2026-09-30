@@ -67,6 +67,8 @@ Har project mein do future ke raaste hote hain. Example (weekly management repor
 | Setup mein lagega | 4 hafte | 6 hafte |
 | Chalane ka kharcha | $600/mahina | $1,200/mahina |
 | Samay bachega | 72 ghante/mahina | 127 ghante/mahina |
+| Net benefit / saal | $49k (agar sirf 60% bachat ho: $26.5k) | $84.7k (60% par: $45k) |
+| Payback | ~4.9 mahine | ~4.3 mahine |
 | Risks | Bachat kam, dheemi improvement | Source spreadsheet ka format badle to dikkat, manager ko AI draft review karna seekhna padega |
 | Controls chahiye | Har variance ka dual manual review, weekly analyst check-in | Automatic schema alert, VP ka single-button approval |
 

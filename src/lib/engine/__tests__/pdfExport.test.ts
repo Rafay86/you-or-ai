@@ -41,6 +41,9 @@ describe('PDF report', () => {
     expect(text).toMatch(/CONFIRMED, ASSUMED AND MISSING/);
     expect(text).toMatch(/regulatory compliance/);
     expect(text).not.toMatch(/EARLY ESTIMATE/);
+    // every task is listed, not just the first eleven
+    expect(text).toMatch(/team conversation/i);
+    expect(text).toMatch(/Scenario|Cautious/);
   });
 
   it('labels a Quick Start draft as an early estimate', async () => {
@@ -48,6 +51,10 @@ describe('PDF report', () => {
     await generateExecutivePDF(w);
     const text = await textOf(path.join(tmp, `${w.identity.id}_executive_report.pdf`));
     expect(text).toMatch(/EARLY ESTIMATE/);
-    expect(text).toMatch(/not yet decided/);
+    expect(text).toMatch(/not decided yet/i);
+    expect(text).toMatch(/Not recorded/);
+    expect(text).toMatch(/placeholders/);
+    expect(text).toMatch(/Cautious/i);
+    expect(text).toMatch(/If 60%|\(if 60%\)|Net \/yr/);
   });
 });

@@ -73,19 +73,16 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-navy-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+            <span className="text-sm text-navy-600">
               Step 7 of 9
             </span>
-            <span className="text-xs font-semibold text-slate-500">
-              Dependency Graph Engine
-            </span>
           </div>
-          <h1 className="text-2xl font-semibold text-slate-900 mt-1">30/60/90-Day Implementation Roadmap</h1>
-          <p className="text-xs text-slate-500">
-            Prerequisites are enforced deterministically. Tasks remain 🔒 Blocked until required evidence is produced.
+          <h1 className="font-display text-3xl font-semibold text-navy-900 mt-1">Roadmap: 30, 60, 90 days</h1>
+          <p className="text-xs text-navy-600">
+            A task stays blocked until the things it depends on are done.
           </p>
         </div>
 
@@ -100,7 +97,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
         )}
         <button
           onClick={() => onNavigate('pilot')}
-          className="px-5 py-2.5 bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold rounded-xl text-xs transition shadow-xs whitespace-nowrap"
+          className="px-5 py-2.5 bg-navy-900 hover:bg-navy-800 text-white font-semibold rounded-full text-sm transition shadow-xs whitespace-nowrap"
         >
           Pilot Tracking Dashboard →
         </button>
@@ -121,14 +118,14 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
           const tfItems = items.filter((i) => i.timeframe === tf.key);
 
           return (
-            <div key={tf.key} className="bg-slate-100/70 rounded-2xl p-4 border border-slate-200 flex flex-col space-y-4">
+            <div key={tf.key} className="bg-navy-100/70 rounded-2xl p-4 border border-navy-100 flex flex-col space-y-4">
               {/* Column Header */}
-              <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex items-center justify-between">
+              <div className="bg-white p-4 rounded-xl border border-navy-100 shadow-xs flex items-center justify-between">
                 <div>
                   <h3 className="text-sm font-semibold text-navy-900">{tf.title}</h3>
-                  <span className="text-xs font-semibold text-slate-500">{tf.subtitle}</span>
+                  <span className="text-xs font-semibold text-navy-600">{tf.subtitle}</span>
                 </div>
-                <span className="text-xs font-mono font-bold bg-slate-100 px-2 py-1 rounded text-slate-700">
+                <span className="text-xs font-mono font-bold bg-navy-100 px-2 py-1 rounded text-navy-700">
                   {tfItems.length} tasks
                 </span>
               </div>
@@ -143,7 +140,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
                     <div
                       key={item.id}
                       className={`p-4 rounded-xl border bg-white transition-all space-y-3 shadow-xs ${
-                        isBlocked ? 'border-red-200 bg-red-50/30' : 'border-slate-200 hover:border-slate-300'
+                        isBlocked ? 'border-red-200 bg-red-50/30' : 'border-navy-100 hover:border-slate-300'
                       }`}
                     >
                       {/* Status & Blocked Badge */}
@@ -162,14 +159,14 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
                           <StatusBadge status={item.status} />
                         )}
 
-                        <span className="text-[11px] text-slate-500 flex items-center gap-1 font-mono">
+                        <span className="text-[11px] text-navy-600 flex items-center gap-1 font-mono">
                           <Clock className="h-3 w-3" />
                           {item.dueDate}
                         </span>
                       </div>
 
-                      <h4 className="text-xs font-bold text-slate-900 leading-snug">{item.title}</h4>
-                      <p className="text-[11px] text-slate-600 line-clamp-2">{item.description}</p>
+                      <h4 className="text-xs font-bold text-navy-900 leading-snug">{item.title}</h4>
+                      <p className="text-[11px] text-navy-700 line-clamp-2">{item.description}</p>
 
                       {/* Dependency Details */}
                       {isBlocked && depCheck.blockingReason && (
@@ -180,15 +177,15 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
                       )}
 
                       {/* Evidence & Controls */}
-                      <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
-                        <span className="text-[11px] text-slate-500 truncate max-w-[120px]">
+                      <div className="pt-2 border-t border-navy-100 flex items-center justify-between text-xs">
+                        <span className="text-[11px] text-navy-600 truncate max-w-[120px]">
                           Owner: {item.owner}
                         </span>
 
                         <select
                           value={item.status}
                           onChange={(e) => handleStatusChange(item, e.target.value as RoadmapStatus)}
-                          className="px-2 py-1 bg-slate-50 border border-slate-300 rounded text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-navy-900"
+                          className="px-2 py-1 bg-navy-50 border border-slate-300 rounded text-xs font-semibold text-navy-800 focus:outline-none focus:ring-2 focus:ring-navy-900"
                         >
                           <option value="Not started">Not started</option>
                           <option value="In progress">In progress</option>
@@ -209,7 +206,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-900/60 backdrop-blur-xs p-4">
           <form
             onSubmit={handleSaveOverride}
-            className="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-md overflow-hidden animate-in fade-in duration-200"
+            className="bg-white rounded-xl shadow-2xl border border-navy-100 w-full max-w-md overflow-hidden animate-in fade-in duration-200"
           >
             <div className="px-6 py-4 bg-red-900 text-white flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -225,8 +222,8 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
               </button>
             </div>
 
-            <div className="p-6 space-y-4 text-xs text-slate-700">
-              <p className="font-bold text-slate-900">
+            <div className="p-6 space-y-4 text-xs text-navy-700">
+              <p className="font-bold text-navy-900">
                 "{blockedAlertModal.item.title}" cannot be started until prerequisites are completed.
               </p>
 
@@ -235,7 +232,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
               </div>
 
               <div className="pt-2 space-y-2">
-                <label className="block text-xs font-semibold text-slate-800">
+                <label className="block text-xs font-semibold text-navy-800">
                   Provide manual override justification to proceed:
                 </label>
                 <textarea
@@ -248,11 +245,11 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
               </div>
             </div>
 
-            <div className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-end gap-3">
+            <div className="px-6 py-4 bg-navy-50 border-t border-navy-100 flex items-center justify-end gap-3">
               <button
                 type="button"
                 onClick={() => setBlockedAlertModal(null)}
-                className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900"
+                className="px-4 py-2 text-xs font-semibold text-navy-700 hover:text-navy-900"
               >
                 Cancel
               </button>

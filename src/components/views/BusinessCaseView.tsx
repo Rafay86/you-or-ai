@@ -34,19 +34,16 @@ export const BusinessCaseView: React.FC<BusinessCaseViewProps> = ({
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-navy-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+            <span className="text-sm text-navy-600">
               Step 6 of 9
             </span>
-            <span className="text-xs font-semibold text-slate-500">
-              Deterministic Mathematical Model
-            </span>
           </div>
-          <h1 className="text-2xl font-semibold text-slate-900 mt-1">Business Case & Financial ROI Ranges</h1>
-          <p className="text-xs text-slate-500">
-            Transparent benefit ranges based on baseline labor hours, hourly rates, and scenario assumptions.
+          <h1 className="font-display text-3xl font-semibold text-navy-900 mt-1">What it is worth</h1>
+          <p className="text-xs text-navy-600">
+            A range of likely benefit, from today’s hours, your hourly cost and the assumptions below. Change any of them and it updates.
           </p>
         </div>
 
@@ -60,7 +57,7 @@ export const BusinessCaseView: React.FC<BusinessCaseViewProps> = ({
           </button>
           <button
             onClick={() => onNavigate('roadmap')}
-            className="px-5 py-2.5 bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold rounded-xl text-xs transition shadow-xs"
+            className="px-5 py-2.5 bg-navy-900 hover:bg-navy-800 text-white font-semibold rounded-full text-sm transition shadow-xs"
           >
             Roadmap 30/60/90 →
           </button>
@@ -73,16 +70,16 @@ export const BusinessCaseView: React.FC<BusinessCaseViewProps> = ({
       {/* Main Metric Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Baseline Cost */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-3">
-          <div className="flex items-center justify-between text-slate-500">
+        <div className="bg-white p-6 rounded-2xl border border-navy-100 shadow-xs space-y-3">
+          <div className="flex items-center justify-between text-navy-600">
             <span className="text-xs font-bold ">Current Baseline</span>
             <Clock className="h-4 w-4 text-slate-400" />
           </div>
-          <div className="text-3xl font-semibold text-slate-900">
+          <div className="text-3xl font-semibold text-navy-900">
             ${current.annualLaborCost.toLocaleString()}
-            <span className="text-xs font-medium text-slate-500 block font-sans">/ year labor expenditure</span>
+            <span className="text-xs font-medium text-navy-600 block font-sans">/ year labor expenditure</span>
           </div>
-          <div className="pt-3 border-t border-slate-100 text-xs text-slate-600 space-y-1">
+          <div className="pt-3 border-t border-navy-100 text-xs text-navy-700 space-y-1">
             <div className="flex justify-between">
               <span>Monthly Hours:</span>
               <span className="font-bold">{current.monthlyHours} hrs/mo</span>
@@ -95,16 +92,16 @@ export const BusinessCaseView: React.FC<BusinessCaseViewProps> = ({
         </div>
 
         {/* Time Released Range */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-3">
-          <div className="flex items-center justify-between text-slate-500">
+        <div className="bg-white p-6 rounded-2xl border border-navy-100 shadow-xs space-y-3">
+          <div className="flex items-center justify-between text-navy-600">
             <span className="text-xs font-bold ">Estimated Time Released</span>
             <TrendingUp className="h-4 w-4 text-emerald-600" />
           </div>
           <div className="text-3xl font-semibold text-emerald-900">
             {future.monthlyHoursSavedMin} – {future.monthlyHoursSavedMax} hrs
-            <span className="text-xs font-medium text-slate-500 block font-sans">released per month</span>
+            <span className="text-xs font-medium text-navy-600 block font-sans">released per month</span>
           </div>
-          <div className="pt-3 border-t border-slate-100 text-xs text-slate-600 space-y-1">
+          <div className="pt-3 border-t border-navy-100 text-xs text-navy-700 space-y-1">
             <div className="flex justify-between">
               <span>Time Reduction:</span>
               <span className="font-bold text-emerald-800">{future.automationMinPct}% – {future.automationMaxPct}%</span>
@@ -140,10 +137,10 @@ export const BusinessCaseView: React.FC<BusinessCaseViewProps> = ({
       </div>
 
       {/* Calculation Details Accordion */}
-      <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-xs">
+      <div className="p-4 rounded-xl bg-white border border-navy-100 shadow-xs">
         <button
           onClick={() => setCalcDetailsOpen(!calcDetailsOpen)}
-          className="flex items-center justify-between w-full text-xs font-bold text-slate-700 hover:text-slate-900"
+          className="flex items-center justify-between w-full text-xs font-bold text-navy-700 hover:text-navy-900"
         >
           <span className="flex items-center gap-2">
             <Info className="h-4 w-4 text-blue-600" />
@@ -155,9 +152,9 @@ export const BusinessCaseView: React.FC<BusinessCaseViewProps> = ({
         </button>
 
         {calcDetailsOpen && (
-          <div className="mt-4 pt-3 border-t border-slate-200 text-xs text-slate-600 space-y-2 font-mono">
-            <p className="font-sans font-bold text-slate-900">Deterministic Mathematical Formulas:</p>
-            <div className="p-3 bg-slate-50 rounded border border-slate-200 space-y-1">
+          <div className="mt-4 pt-3 border-t border-navy-100 text-xs text-navy-700 space-y-2 font-mono">
+            <p className="font-sans font-bold text-navy-900">How the numbers are worked out:</p>
+            <div className="p-3 bg-navy-50 rounded border border-navy-100 space-y-1">
               <div>• Current Monthly Cost = Monthly Hours × Hourly Rate (${current.monthlyHours} × ${current.hourlyRate} = ${current.monthlyLaborCost})</div>
               <div>• Time Released Min = Monthly Hours × Automation Min % (${current.monthlyHours} × {future.automationMinPct}% = {future.monthlyHoursSavedMin} hrs)</div>
               <div>• Gross Annual Savings = Monthly Hours Saved × Hourly Rate × 12</div>
