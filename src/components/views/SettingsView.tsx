@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { isConfigured, isOptedOut, setOptOut } from '@/lib/analytics/analytics';
 import { WorkflowState } from '@/types';
 import { Settings, Database, Shield, Cpu, RotateCcw, Lock } from 'lucide-react';
 
@@ -8,6 +9,13 @@ interface SettingsViewProps {
 }
 
 export const SettingsView: React.FC<SettingsViewProps> = ({ workflow, onResetData }) => {
+  const [off, setOff] = useState(false);
+  const [configured, setConfigured] = useState(false);
+  useEffect(() => {
+    setOff(isOptedOut());
+    setConfigured(isConfigured());
+  }, []);
+
   return (
     <div className="space-y-8 animate-in fade-in duration-300 max-w-4xl">
       {/* Header */}
@@ -42,6 +50,33 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ workflow, onResetDat
               <p className="text-navy-700 text-[11px]">Retains workspace, task overrides, and pilot data across refreshes.</p>
             </div>
           </div>
+        </div>
+
+        {/* Usage analytics */}
+        <div className="bg-white p-6 rounded-2xl border border-navy-100 shadow-xs space-y-3">
+          <h3 className="text-sm font-bold text-navy-900 flex items-center gap-2">
+            <Shield className="h-4 w-4 text-navy-900" />
+            Usage analytics
+          </h3>
+          <p className="text-xs text-navy-700 max-w-xl">
+            {configured
+              ? 'This site counts which screens are opened and how projects are started, so the team can see if it is useful. It never sends workflow text, task names, file names or file contents.'
+              : 'Analytics is not set up for this copy of the site, so nothing is collected.'}
+          </p>
+          {configured && (
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                className="h-4 w-4 accent-navy-900"
+                checked={off}
+                onChange={(e) => {
+                  setOptOut(e.target.checked);
+                  setOff(e.target.checked);
+                }}
+              />
+              Don’t count my visits on this device
+            </label>
+          )}
         </div>
 
         {/* Data Reset Action */}

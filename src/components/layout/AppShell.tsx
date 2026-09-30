@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { WorkflowState } from '@/types';
 import { Download, RotateCcw, Check, Menu, X } from 'lucide-react';
+import { track } from '@/lib/analytics/analytics';
 import { generateExecutivePDF } from '@/lib/engine/pdfExport';
 import { OverlapMark } from '@/components/common/Overlap';
 
@@ -67,6 +68,7 @@ export const AppShell: React.FC<AppShellProps> = ({ workflow, activeView, onNavi
     try {
       setIsExporting(true);
       await generateExecutivePDF(workflow);
+      track('report_exported');
     } catch (e) {
       console.error('PDF export failed:', e);
     } finally {
@@ -178,6 +180,13 @@ export const AppShell: React.FC<AppShellProps> = ({ workflow, activeView, onNavi
             <span className="hidden sm:inline-flex items-center gap-1.5 text-xs text-navy-600 px-2">
               <Check className="h-3.5 w-3.5 text-both" strokeWidth={3} /> Saved on this device
             </span>
+            <button
+              onClick={() => go('guide')}
+              className={`inline-flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold px-3.5 py-2 rounded-full border transition-colors ${activeView === 'guide' ? 'bg-navy-900 text-white border-navy-900' : 'border-navy-100 hover:border-navy-900 text-navy-900'}`}
+            >
+              <span className="sm:hidden">Guide</span>
+              <span className="hidden sm:inline">How it works</span>
+            </button>
             <button
               onClick={onReset}
               title="Restore the original example data"

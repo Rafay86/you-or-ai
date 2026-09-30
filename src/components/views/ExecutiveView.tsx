@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Download } from 'lucide-react';
 import { WorkflowState } from '@/types';
 import { calculateCurrentCost, calculateFutureCost } from '@/lib/engine/calculationEngine';
+import { track } from '@/lib/analytics/analytics';
 import { generateExecutivePDF } from '@/lib/engine/pdfExport';
 import { effectiveClassification } from '@/lib/engine/effective';
 import { checkTaskDependencies } from '@/lib/engine/dependencyEngine';
@@ -50,6 +51,7 @@ export const ExecutiveView: React.FC<ExecutiveViewProps> = ({ workflow, onNaviga
     try {
       setIsExporting(true);
       await generateExecutivePDF(workflow);
+      track('report_exported');
     } catch (e) {
       console.error('Export failed', e);
     } finally {

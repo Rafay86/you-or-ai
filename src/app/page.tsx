@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { WorkflowState, WorkflowIdentity, Task, DecisionOverride, Scenario, BusinessCaseAssumption, RoadmapItem, PilotMetric, GovernanceItem, FinalDecisionState } from '@/types';
 import { db } from '@/lib/storage/db';
+import { track } from '@/lib/analytics/analytics';
 import { AppShell } from '@/components/layout/AppShell';
 
 import { OverviewView } from '@/components/views/OverviewView';
@@ -17,6 +18,7 @@ import { FinalDecisionView } from '@/components/views/FinalDecisionView';
 import { ExecutiveView } from '@/components/views/ExecutiveView';
 import { GovernanceView } from '@/components/views/GovernanceView';
 import { StartView } from '@/components/views/StartView';
+import { GuideView } from '@/components/views/GuideView';
 import { CurrentStateView } from '@/components/views/CurrentStateView';
 import { PeopleControlsView } from '@/components/views/PeopleControlsView';
 import { ProjectsView } from '@/components/views/ProjectsView';
@@ -38,6 +40,11 @@ export default function StudioApp() {
     const loaded = db.loadWorkflow(id);
     setWorkflow(loaded);
   }, []);
+
+  // Which screen is open. The view id only, never anything from the workspace.
+  useEffect(() => {
+    if (workflow) track('screen_view_studio', { view: activeView });
+  }, [activeView, workflow === null]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!workflow) {
     return (
@@ -84,6 +91,7 @@ export default function StudioApp() {
 
   const handleCreateProject = (w: WorkflowState) => {
     db.createProject(w);
+    track('project_created', { mode: w.startMode, steps: w.tasks.length });
     setActiveWorkflowId(w.id);
     setWorkflow(w);
     setActiveView(w.startMode === 'example' ? 'overview' : 'current-state');
@@ -145,6 +153,7 @@ export default function StudioApp() {
   };
 
   const handleSelectScenario = (scenarioId: 'scenario-a' | 'scenario-b') => {
+    track('scenario_chosen', { scenario: scenarioId });
     updateAndSaveWorkflow((prev) => ({
       ...prev,
       scenarios: prev.scenarios.map((s) => ({
@@ -182,6 +191,7 @@ export default function StudioApp() {
   };
 
   const handleUpdateFinalDecision = (finalDecision: FinalDecisionState) => {
+    if (finalDecision.decidedAt) track('decision_recorded', { outcome: finalDecision.selectedOutcome });
     updateAndSaveWorkflow((prev) => ({ ...prev, finalDecision }));
   };
 
@@ -277,6 +287,18 @@ export default function StudioApp() {
           workflow={workflow}
           onUpdateGovernance={handleUpdateGovernance}
           onNavigate={handleNavigate}
+        />
+      )}
+
+      {activeView === 'guide' && (
+        <GuideView
+          onNavigate={handleNavigate}
+          onOpenExample={(view) => {
+            db.setActiveWorkflowId('weekly-management-report');
+            setActiveWorkflowId('weekly-management-report');
+            setWorkflow(db.loadWorkflow('weekly-management-report'));
+            handleNavigate(view);
+          }}
         />
       )}
 

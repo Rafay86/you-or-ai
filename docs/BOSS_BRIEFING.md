@@ -124,7 +124,7 @@ Nahi. Ye chatbot nahi hai. Ye workflow ko todta hai aur decision, plan, paisa au
 Har verdict ke rules aur wajah dikhti hain, koi black box nahi. Aur aakhri decision insaan ka hai: override hota hai aur record hota hai.
 
 **"Hamare confidential documents ka kya?"**
-Upload browser ke andar hi padha jaata hai. Na server par jaata hai, na kisi AI service ko bheja jaata hai, na log hota hai. Ye design se hai, sirf vaada nahi.
+Upload browser ke andar hi padha jaata hai. Na server par jaata hai, na kisi AI service ko bheja jaata hai, na log hota hai. Ye design se hai, sirf vaada nahi. Agar usage analytics on hai to sirf gintiyan jaati hain (kaun sa screen khula, project kaise shuru hua). Workflow ka text, task naam ya file naam kabhi nahi, aur Settings mein band karne ka option hai.
 
 **"ROI kitna pakka hai?"**
 Pakka nahi hai, aur app bhi aisa nahi kehta. Range dikhata hai, aur har input ke saath label hai (tumhara fact / template / estimate). Asli confidence pilot ke baad aata hai.

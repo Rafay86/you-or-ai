@@ -29,7 +29,7 @@ Node 18 or newer. No Docker needed.
 | 8 | **Pilot** | Enter actual results, see which assumptions were wrong |
 | 9 | **Decide** | Expand, improve and retest, or stop, with evidence |
 
-Also: executive summary, governance and open risks, saved projects with named versions, and a PDF report that labels early estimates and unconfirmed items.
+Also: a “How it works” guide (header button) for newcomers and sponsors, with a five-minute demo path into the example; executive summary, governance and open risks, saved projects with named versions, and a PDF report that labels early estimates and unconfirmed items.
 
 ## Architecture
 
@@ -108,6 +108,12 @@ Quick start and uploads have less detail, so `inference.ts` guesses attributes f
 - Scanned PDFs (no text layer) are rejected with a clear message. There is no OCR.
 
 `public/pdf.worker.min.mjs` is a copy of the pdf.js worker from `node_modules/pdfjs-dist/legacy/build/`. Refresh it if you upgrade `pdfjs-dist`.
+
+## Usage analytics (optional)
+
+Off unless `NEXT_PUBLIC_FIREBASE_*` variables are set (see `.env.example`; copy to `.env.local`). When on, it uses Firebase Analytics (GA4) and sends only anonymous counts: which screen is open, how a project was started, the file *type* of an upload and whether it read, and that a report was exported, a scenario chosen or a decision recorded.
+
+Enforced in `src/lib/analytics/analytics.ts`: an allow-list of events, and an allow-list of parameter names *and values*, so workflow text, task names, file names and document contents cannot be sent even by mistake. Users can switch it off in Settings. Note that GA also records standard page-view data (URL, browser, rough location). Decide with your privacy owner whether a consent banner is needed for your audience before using it with real users.
 
 ## Sample workflows
 

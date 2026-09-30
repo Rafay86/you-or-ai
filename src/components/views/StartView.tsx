@@ -10,6 +10,7 @@ import { UploadError, MAX_UPLOAD_BYTES } from '@/lib/extraction/limits';
 import { SAMPLE_PROCEDURE } from '@/lib/data/sampleProcedure';
 import { ExtractionReview } from './ExtractionReview';
 import { Pill } from '@/components/common/Provenance';
+import { track, fileTypeOf } from '@/lib/analytics/analytics';
 
 interface StartViewProps {
   onCreate: (w: WorkflowState) => void;
@@ -141,7 +142,9 @@ const UploadFlow: React.FC<{ onCreate: (w: WorkflowState) => void }> = ({ onCrea
     try {
       const sections = await load();
       setResult({ name, data: extractWorkflow(sections) });
+      track('upload_read', { file_type: fileTypeOf(name), ok: true });
     } catch (e) {
+      track('upload_read', { file_type: fileTypeOf(name), ok: false });
       // Log the error type only, never the document text.
       console.warn('Upload could not be read:', e instanceof Error ? `${e.name}: ${e.message}` : 'unknown error');
       setError(e instanceof UploadError ? e.message : 'This file could not be read. Try another file, or use Quick start.');
