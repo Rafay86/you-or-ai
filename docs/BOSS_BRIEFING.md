@@ -11,6 +11,8 @@ Ye file tumhare liye hai. Isse padh ke tum boss ko poora product samjha sakte ho
 **30 second ka pitch:**
 "Log poochte hain 'AI kahan lagayein?'. Galat sawaal hai. Sahi sawaal hai 'is kaam ka kaunsa hissa AI kare, kaunsa insaan, aur kaunsa dono?'. Ye tool wahi batata hai, wajah ke saath, aur phir batata hai kitna paisa bachega, kya-kya tayyari chahiye, aur pilot ke baad expand karna hai ya rokna hai."
 
+**Boss ko seedha dikhane ka sabse aasaan tareeka:** app ke header mein **"How it works"** button hai. Wo ek page kholta hai jisme yehi sab samjhaya gaya hai (teen answers, example ke asli numbers, paanch minute ka demo, nau steps, sawal-jawab), aur har jagah se example ke asli screens par jaane ke buttons hain. Agar boss ko file nahi padhni, to seedha wahi page dikha do.
+
 ---
 
 ## 2. Teen cheezein jo boss ko pehle samjhani hain
@@ -93,11 +95,13 @@ Har step ke saath: kya karta hai, aur demo mein kya dikhana hai.
 8. **Pilot.** Pilot ke asli numbers daalo, baseline aur target se compare hote hain. Ye bhi dikhata hai **kaunsi assumption galat nikli**. *Demo: ek actual daalo, "Was wrong / Held" dikhao.*
 9. **Decide.** Evidence se recommendation: Expand, Improve and retest, ya Stop. Bina pilot data ke ye "abhi decide nahi ho sakta" bolta hai, Stop nahi.
 
-Iske alawa: **Executive summary** (ek page ka review), **Governance and risks**, **Saved projects** (versions ke saath) aur **Download report** (PDF).
+Iske alawa (sidebar mein): **Compare scenarios** (A aur B ka side-by-side, 4th step ke baad), **Executive summary** (ek page ka review), **Governance and risks**, **Saved projects** (versions ke saath), **Industry library** aur **Download report** (PDF, jisme scenario table bhi hai).
 
 ---
 
 ## 5. Demo script (7 minute)
+
+*Shortcut:* "How it works" page par "A five minute demo" section hai. Uske paanch buttons yehi raasta ek-ek click mein khol dete hain.
 
 Example ko already load kiya hua hai: "Weekly Management Reporting" (fictional).
 
@@ -157,7 +161,15 @@ Ye "prototype nahi, kaam karta hua pehla version" hai. Enterprise-ready nahi.
 
 ---
 
-## 8. Do kaam jo tumhe demo se pehle karne chahiye
+## 8. Boss tak kaise pahunchana hai
+
+- **Local:** `npm run dev` aur http://localhost:3000.
+- **Link bhejna ho to:** `npm run build:static`, phir `firebase deploy --only hosting:you-or-ai`. Site ID `you-or-ai` pehle Firebase project mein bani honi chahiye. Live hone par address `https://you-or-ai.web.app` hoga.
+- **Dhyaan:** deploy ki hui site public URL par hoti hai aur login nahi hai. Har banda apne browser mein alag data dekhta hai (kisi ka project kisi ko nahi dikhta). Sirf boss ko dikhana ho to Firebase ka preview channel (`firebase hosting:channel:deploy demo`) use karo, wo alag temporary link deta hai.
+
+---
+
+## 9. Do kaam jo tumhe demo se pehle karne chahiye
 
 1. `npm run dev` chalao aur ek baar poora example khud dekh lo.
 2. Ek baar apna koi chhota asli procedure upload karke dekho, taaki live demo mein surprise na ho.
