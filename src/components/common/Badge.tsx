@@ -17,20 +17,20 @@ export const RecommendationBadge: React.FC<RecommendationBadgeProps> = ({
 
   switch (type) {
     case 'AI':
-      bg = 'bg-blue-50 text-blue-900 border-blue-200';
-      label = 'AI (Automated)';
+      bg = 'bg-ai-soft text-ai-ink border-transparent';
+      label = 'AI';
       break;
     case 'YOU':
-      bg = 'bg-amber-50 text-amber-900 border-amber-200';
-      label = 'YOU (Human)';
+      bg = 'bg-you-soft text-you-ink border-transparent';
+      label = 'You';
       break;
     case 'BOTH':
-      bg = 'bg-emerald-50 text-emerald-900 border-emerald-200';
-      label = 'BOTH (Human + AI)';
+      bg = 'bg-both-soft text-both-ink border-transparent';
+      label = 'Both';
       break;
     case 'NEEDS_ASSESSMENT':
       bg = 'bg-red-50 text-red-900 border-red-200';
-      label = 'NEEDS ASSESSMENT';
+      label = 'Needs a look';
       break;
   }
 
@@ -43,22 +43,22 @@ export const RecommendationBadge: React.FC<RecommendationBadgeProps> = ({
 
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-md border ${bg} ${sizeClasses} transition-all`}
+      className={`inline-flex items-center gap-1 rounded-full border ${bg} ${sizeClasses} transition-all`}
     >
       <span
         className={`h-1.5 w-1.5 rounded-full ${
           type === 'AI'
-            ? 'bg-blue-600'
+            ? 'bg-ai'
             : type === 'YOU'
-            ? 'bg-amber-600'
+            ? 'bg-you'
             : type === 'BOTH'
-            ? 'bg-emerald-600'
+            ? 'bg-both'
             : 'bg-red-600'
         }`}
       />
       {label}
       {isOverride && (
-        <span className="ml-1 text-[10px] font-bold uppercase tracking-wider text-gold-700 bg-gold-100 px-1 rounded">
+        <span className="ml-1 text-[10px] font-bold text-gold-700 bg-gold-100 px-1 rounded">
           Override
         </span>
       )}

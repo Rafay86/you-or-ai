@@ -34,7 +34,7 @@ export const ConfidenceIndicator: React.FC<ConfidenceIndicatorProps> = ({ assess
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+              <span className="text-xs font-semibold text-slate-500">
                 Confidence Rating
               </span>
               <span className="text-xs font-bold px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-800">

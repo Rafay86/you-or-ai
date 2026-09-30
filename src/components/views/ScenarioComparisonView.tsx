@@ -23,14 +23,14 @@ export const ScenarioComparisonView: React.FC<ScenarioComparisonViewProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
-              03 Redesign Stage
+            <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+              Step 3 of 7
             </span>
             <span className="text-xs font-semibold text-slate-500">
               Future-State Options
             </span>
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-900 mt-1">Scenario Comparison</h1>
+          <h1 className="text-2xl font-semibold text-slate-900 mt-1">Scenario Comparison</h1>
           <p className="text-xs text-slate-500">
             Evaluate alternative transformation strategies side-by-side. The studio does not manufacture winners; leadership selects based on risk appetite.
           </p>
@@ -59,40 +59,40 @@ export const ScenarioComparisonView: React.FC<ScenarioComparisonViewProps> = ({
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">
+                  <span className="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">
                     {sc.id === 'scenario-a' ? 'Option 1' : 'Option 2'}
                   </span>
                   {isSelected && (
-                    <span className="text-xs font-extrabold text-gold-800 bg-gold-100 border border-gold-300 px-3 py-1 rounded-full flex items-center gap-1">
+                    <span className="text-xs font-semibold text-gold-800 bg-gold-100 border border-gold-300 px-3 py-1 rounded-full flex items-center gap-1">
                       <Check className="h-3.5 w-3.5" />
                       Selected Target Scenario
                     </span>
                   )}
                 </div>
 
-                <h3 className="text-xl font-extrabold text-slate-900">{sc.name}</h3>
+                <h3 className="text-xl font-semibold text-slate-900">{sc.name}</h3>
                 <p className="text-xs text-slate-600 leading-relaxed">{sc.tagline}</p>
 
                 {/* Key Metrics Grid */}
                 <div className="grid grid-cols-2 gap-3 pt-4 border-t border-slate-100 text-xs">
                   <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
-                    <span className="text-[10px] text-slate-500 uppercase font-bold">Monthly Human Effort</span>
-                    <div className="text-base font-extrabold text-slate-900 mt-0.5">{sc.humanEffortHoursMonthly} hrs/mo</div>
+                    <span className="text-[10px] text-slate-500 font-bold">Monthly Human Effort</span>
+                    <div className="text-base font-semibold text-slate-900 mt-0.5">{sc.humanEffortHoursMonthly} hrs/mo</div>
                   </div>
 
                   <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
-                    <span className="text-[10px] text-slate-500 uppercase font-bold">AI Involvement</span>
-                    <div className="text-base font-extrabold text-blue-900 mt-0.5">{sc.aiInvolvementPct}% automated</div>
+                    <span className="text-[10px] text-slate-500 font-bold">AI Involvement</span>
+                    <div className="text-base font-semibold text-blue-900 mt-0.5">{sc.aiInvolvementPct}% automated</div>
                   </div>
 
                   <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
-                    <span className="text-[10px] text-slate-500 uppercase font-bold">Implementation Effort</span>
-                    <div className="text-base font-extrabold text-slate-900 mt-0.5">{sc.implementationEffortWeeks} weeks</div>
+                    <span className="text-[10px] text-slate-500 font-bold">Implementation Effort</span>
+                    <div className="text-base font-semibold text-slate-900 mt-0.5">{sc.implementationEffortWeeks} weeks</div>
                   </div>
 
                   <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
-                    <span className="text-[10px] text-slate-500 uppercase font-bold">Potential Time Released</span>
-                    <div className="text-base font-extrabold text-emerald-900 mt-0.5">{sc.potentialTimeReleasedHoursMonthly} hrs/mo</div>
+                    <span className="text-[10px] text-slate-500 font-bold">Potential Time Released</span>
+                    <div className="text-base font-semibold text-emerald-900 mt-0.5">{sc.potentialTimeReleasedHoursMonthly} hrs/mo</div>
                   </div>
                 </div>
 

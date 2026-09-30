@@ -56,7 +56,7 @@ export const AssumptionPanel: React.FC<AssumptionPanelProps> = ({
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 bg-slate-200 px-2 py-0.5 rounded">
+                    <span className="text-[10px] font-bold text-slate-500 bg-slate-200 px-2 py-0.5 rounded">
                       {ass.category}
                     </span>
                     <h4 className="text-sm font-bold text-slate-900 mt-1">{ass.name}</h4>

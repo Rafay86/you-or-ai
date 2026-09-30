@@ -12,10 +12,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ workflow, onResetDat
     <div className="space-y-8 animate-in fade-in duration-300 max-w-4xl">
       {/* Header */}
       <div className="pb-4 border-b border-slate-200">
-        <span className="text-xs font-bold uppercase tracking-wider text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+        <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
           Workspace Settings
         </span>
-        <h1 className="text-2xl font-extrabold text-slate-900 mt-1">Studio Configuration & Architecture</h1>
+        <h1 className="text-2xl font-semibold text-slate-900 mt-1">Studio Configuration & Architecture</h1>
         <p className="text-xs text-slate-500">
           Local data persistence, decision engine rules, and enterprise production architecture notes.
         </p>
@@ -31,14 +31,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ workflow, onResetDat
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
             <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-              <span className="text-[10px] font-bold uppercase text-slate-500">Active Decision Provider</span>
-              <div className="font-extrabold text-slate-900">Deterministic Rule Engine v1.0</div>
+              <span className="text-[10px] font-bold text-slate-500">Active Decision Provider</span>
+              <div className="font-semibold text-slate-900">Deterministic Rule Engine v1.0</div>
               <p className="text-slate-600 text-[11px]">100% transparent rules. No paid LLM API required.</p>
             </div>
 
             <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-              <span className="text-[10px] font-bold uppercase text-slate-500">Local Persistence Layer</span>
-              <div className="font-extrabold text-slate-900">Local Database Repository</div>
+              <span className="text-[10px] font-bold text-slate-500">Local Persistence Layer</span>
+              <div className="font-semibold text-slate-900">Local Database Repository</div>
               <p className="text-slate-600 text-[11px]">Retains workspace, task overrides, and pilot data across refreshes.</p>
             </div>
           </div>

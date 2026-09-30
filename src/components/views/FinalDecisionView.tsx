@@ -51,14 +51,14 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
-              07 Decide Stage
+            <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+              Step 7 of 7
             </span>
             <span className="text-xs font-semibold text-slate-500">
               Evidence-Based Executive Gate
             </span>
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-900 mt-1">Final Executive Decision</h1>
+          <h1 className="text-2xl font-semibold text-slate-900 mt-1">Final Executive Decision</h1>
           <p className="text-xs text-slate-500">
             Synthesize pilot empirical evidence, open risks, and governance compliance before C-suite authorization.
           </p>
@@ -75,7 +75,7 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
       {/* Decision Banner Card */}
       <div className="bg-navy-900 text-white rounded-2xl p-8 border border-navy-800 shadow-xl space-y-6">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-xs font-bold text-gold-400 uppercase tracking-wider">
+          <div className="flex items-center gap-2 text-xs font-bold text-gold-400 ">
             <Award className="h-5 w-5" />
             Automated Evidence Recommendation: {assessment.recommendedOutcome}
           </div>
@@ -94,8 +94,8 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
 
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-4 border-t border-navy-800">
           <div>
-            <span className="text-xs text-slate-400 uppercase font-semibold">Authorized Outcome</span>
-            <div className="text-3xl font-extrabold text-gold-400 mt-1">
+            <span className="text-xs text-slate-400 font-semibold">Authorized Outcome</span>
+            <div className="text-3xl font-semibold text-gold-400 mt-1">
               {decisionState.selectedOutcome}
               {decisionState.overrideReason && (
                 <span className="ml-3 text-xs font-bold px-2.5 py-1 rounded bg-gold-900 text-gold-300 border border-gold-700">
@@ -107,7 +107,7 @@ export const FinalDecisionView: React.FC<FinalDecisionViewProps> = ({
           </div>
 
           <div className="text-xs text-slate-300 space-y-1 bg-navy-800/80 p-4 rounded-xl border border-navy-700 min-w-[220px]">
-            <div className="text-slate-400 font-bold uppercase text-[10px]">Decision Metadata</div>
+            <div className="text-slate-400 font-bold text-[10px]">Decision Metadata</div>
             <div>Decided By: <strong className="text-white">{decisionState.decidedBy}</strong></div>
             <div>Date: <strong className="text-white">{new Date(decisionState.decidedAt).toLocaleDateString()}</strong></div>
           </div>

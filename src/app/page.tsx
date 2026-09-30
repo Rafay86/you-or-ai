@@ -34,13 +34,8 @@ export default function StudioApp() {
 
   if (!workflow) {
     return (
-      <div className="min-h-screen bg-navy-900 text-white flex items-center justify-center font-sans">
-        <div className="flex items-center gap-3">
-          <div className="h-6 w-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
-          <span className="text-sm font-semibold tracking-wider uppercase text-gold-400">
-            Initializing Transformation Studio...
-          </span>
-        </div>
+      <div className="min-h-screen bg-warmwhite text-navy-900 flex items-center justify-center font-sans">
+        <p className="font-display text-lg text-navy-700">Opening your workspace…</p>
       </div>
     );
   }

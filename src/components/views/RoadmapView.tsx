@@ -71,14 +71,14 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
-              05 Roadmap Stage
+            <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+              Step 5 of 7
             </span>
             <span className="text-xs font-semibold text-slate-500">
               Dependency Graph Engine
             </span>
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-900 mt-1">30/60/90-Day Implementation Roadmap</h1>
+          <h1 className="text-2xl font-semibold text-slate-900 mt-1">30/60/90-Day Implementation Roadmap</h1>
           <p className="text-xs text-slate-500">
             Prerequisites are enforced deterministically. Tasks remain 🔒 Blocked until required evidence is produced.
           </p>
@@ -102,7 +102,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
               {/* Column Header */}
               <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex items-center justify-between">
                 <div>
-                  <h3 className="text-sm font-extrabold text-navy-900">{tf.title}</h3>
+                  <h3 className="text-sm font-semibold text-navy-900">{tf.title}</h3>
                   <span className="text-xs font-semibold text-slate-500">{tf.subtitle}</span>
                 </div>
                 <span className="text-xs font-mono font-bold bg-slate-100 px-2 py-1 rounded text-slate-700">

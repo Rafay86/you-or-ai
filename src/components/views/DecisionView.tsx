@@ -74,11 +74,11 @@ export const DecisionView: React.FC<DecisionViewProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider bg-navy-100 text-navy-900 px-2.5 py-0.5 rounded">
+            <span className="text-xs font-bold bg-navy-100 text-navy-900 px-2.5 py-0.5 rounded">
               Phase 07 • Decision Gate
             </span>
           </div>
-          <h1 className="text-2xl font-extrabold text-navy-900 mt-1">Executive Decision & Evidence Verification</h1>
+          <h1 className="text-2xl font-semibold text-navy-900 mt-1">Executive Decision & Evidence Verification</h1>
           <p className="text-xs text-slate-500 mt-0.5">
             Rule-based evidence synthesis to decide whether to expand rollout, improve and retest, or stop.
           </p>
@@ -97,10 +97,10 @@ export const DecisionView: React.FC<DecisionViewProps> = ({
       <div className="bg-navy-900 text-white p-6 sm:p-8 rounded-2xl border border-navy-800 shadow-lg space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-navy-800 pb-6">
           <div className="space-y-1">
-            <span className="text-xs font-bold text-gold-400 uppercase tracking-wider">
+            <span className="text-xs font-bold text-gold-400 ">
               Automated Decision Recommendation Engine
             </span>
-            <h2 className="text-xl font-extrabold text-white">
+            <h2 className="text-xl font-semibold text-white">
               Recommended Gate Decision: {recommendation.recommendedOutcome.replace(/_/g, ' ')}
             </h2>
             <p className="text-xs text-slate-300 max-w-2xl">{recommendation.rationale}</p>
@@ -112,7 +112,7 @@ export const DecisionView: React.FC<DecisionViewProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
           {/* Empirical Evidence */}
           <div className="bg-navy-800/80 p-4 rounded-xl border border-navy-700/80 space-y-3">
-            <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+            <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold ">
               <CheckCircle2 className="h-4 w-4" />
               <span>Empirical Evidence</span>
             </div>
@@ -128,7 +128,7 @@ export const DecisionView: React.FC<DecisionViewProps> = ({
 
           {/* Open Risks */}
           <div className="bg-navy-800/80 p-4 rounded-xl border border-navy-700/80 space-y-3">
-            <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider">
+            <div className="flex items-center gap-2 text-amber-400 text-xs font-bold ">
               <AlertOctagon className="h-4 w-4" />
               <span>Open Risks & Blockers</span>
             </div>
@@ -144,7 +144,7 @@ export const DecisionView: React.FC<DecisionViewProps> = ({
 
           {/* Evidence Gaps */}
           <div className="bg-navy-800/80 p-4 rounded-xl border border-navy-700/80 space-y-3">
-            <div className="flex items-center gap-2 text-gold-400 text-xs font-bold uppercase tracking-wider">
+            <div className="flex items-center gap-2 text-gold-400 text-xs font-bold ">
               <Award className="h-4 w-4" />
               <span>Evidence Gaps</span>
             </div>
@@ -188,11 +188,11 @@ export const DecisionView: React.FC<DecisionViewProps> = ({
               >
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                    <span className="text-xs font-bold text-slate-700">
                       {outcome.replace(/_/g, ' ')}
                     </span>
                     {recommendation.recommendedOutcome === outcome && (
-                      <span className="text-[10px] font-extrabold bg-gold-200 text-navy-900 px-2 py-0.5 rounded">
+                      <span className="text-[10px] font-semibold bg-gold-200 text-navy-900 px-2 py-0.5 rounded">
                         Recommended
                       </span>
                     )}

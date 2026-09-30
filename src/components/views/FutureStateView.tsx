@@ -73,14 +73,14 @@ export const FutureStateView: React.FC<FutureStateViewProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
-              03 Redesign Stage
+            <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+              Step 3 of 7
             </span>
             <span className="text-xs font-semibold text-slate-500">
               Interactive Workflow Canvas
             </span>
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-900 mt-1">Current vs Proposed Workflow</h1>
+          <h1 className="text-2xl font-semibold text-slate-900 mt-1">Current vs Proposed Workflow</h1>
           <p className="text-xs text-slate-500">
             Compare step-by-step handoffs between legacy manual workflow and proposed Human+AI target architecture.
           </p>
@@ -160,7 +160,7 @@ export const FutureStateView: React.FC<FutureStateViewProps> = ({
                 <div className="relative group w-64 bg-white text-slate-900 rounded-xl p-4 border border-slate-200 shadow-lg space-y-2 hover:border-gold-500 transition">
                   {/* Review Point Badge */}
                   {node.reviewPoint && (
-                    <span className="absolute -top-3 left-4 bg-gold-500 text-navy-900 font-extrabold text-[10px] px-2 py-0.5 rounded-full shadow-xs border border-white flex items-center gap-1">
+                    <span className="absolute -top-3 left-4 bg-gold-500 text-navy-900 font-semibold text-[10px] px-2 py-0.5 rounded-full shadow-xs border border-white flex items-center gap-1">
                       <ShieldCheck className="h-3 w-3" />
                       Human Review Gate
                     </span>

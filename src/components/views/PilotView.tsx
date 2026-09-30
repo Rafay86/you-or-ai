@@ -49,14 +49,14 @@ export const PilotView: React.FC<PilotViewProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
-              06 Pilot Stage
+            <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+              Step 6 of 7
             </span>
             <span className="text-xs font-semibold text-slate-500">
               Empirical Evidence Dashboard
             </span>
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-900 mt-1">Pilot Results & Variance Analysis</h1>
+          <h1 className="text-2xl font-semibold text-slate-900 mt-1">Pilot Results & Variance Analysis</h1>
           <p className="text-xs text-slate-500">
             Compare actual pilot outcomes against baseline metrics and target ranges.
           </p>
@@ -140,7 +140,7 @@ export const PilotView: React.FC<PilotViewProps> = ({
                           <span className="text-slate-500 text-[11px]">{m.unit}</span>
                         </div>
                       ) : (
-                        <span className="font-extrabold text-slate-900">
+                        <span className="font-semibold text-slate-900">
                           {m.actual} {m.unit}
                         </span>
                       )}

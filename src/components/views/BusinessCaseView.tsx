@@ -37,14 +37,14 @@ export const BusinessCaseView: React.FC<BusinessCaseViewProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
-              04 Business Case Stage
+            <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+              Step 4 of 7
             </span>
             <span className="text-xs font-semibold text-slate-500">
               Deterministic Mathematical Model
             </span>
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-900 mt-1">Business Case & Financial ROI Ranges</h1>
+          <h1 className="text-2xl font-semibold text-slate-900 mt-1">Business Case & Financial ROI Ranges</h1>
           <p className="text-xs text-slate-500">
             Transparent benefit ranges based on baseline labor hours, hourly rates, and scenario assumptions.
           </p>
@@ -75,10 +75,10 @@ export const BusinessCaseView: React.FC<BusinessCaseViewProps> = ({
         {/* Baseline Cost */}
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-3">
           <div className="flex items-center justify-between text-slate-500">
-            <span className="text-xs font-bold uppercase tracking-wider">Current Baseline</span>
+            <span className="text-xs font-bold ">Current Baseline</span>
             <Clock className="h-4 w-4 text-slate-400" />
           </div>
-          <div className="text-3xl font-extrabold text-slate-900">
+          <div className="text-3xl font-semibold text-slate-900">
             ${current.annualLaborCost.toLocaleString()}
             <span className="text-xs font-medium text-slate-500 block font-sans">/ year labor expenditure</span>
           </div>
@@ -97,10 +97,10 @@ export const BusinessCaseView: React.FC<BusinessCaseViewProps> = ({
         {/* Time Released Range */}
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-3">
           <div className="flex items-center justify-between text-slate-500">
-            <span className="text-xs font-bold uppercase tracking-wider">Estimated Time Released</span>
+            <span className="text-xs font-bold ">Estimated Time Released</span>
             <TrendingUp className="h-4 w-4 text-emerald-600" />
           </div>
-          <div className="text-3xl font-extrabold text-emerald-900">
+          <div className="text-3xl font-semibold text-emerald-900">
             {future.monthlyHoursSavedMin} – {future.monthlyHoursSavedMax} hrs
             <span className="text-xs font-medium text-slate-500 block font-sans">released per month</span>
           </div>
@@ -119,10 +119,10 @@ export const BusinessCaseView: React.FC<BusinessCaseViewProps> = ({
         {/* Expected Net Annual Benefit Range */}
         <div className="bg-navy-900 text-white p-6 rounded-2xl border border-navy-800 shadow-lg space-y-3">
           <div className="flex items-center justify-between text-gold-400">
-            <span className="text-xs font-bold uppercase tracking-wider">Net Annual Benefit Range</span>
+            <span className="text-xs font-bold ">Net Annual Benefit Range</span>
             <DollarSign className="h-4 w-4 text-gold-400" />
           </div>
-          <div className="text-3xl font-extrabold text-gold-400">
+          <div className="text-3xl font-semibold text-gold-400">
             ${(future.netAnnualBenefitMin / 1000).toFixed(0)}k – ${(future.netAnnualBenefitMax / 1000).toFixed(0)}k
             <span className="text-xs font-medium text-slate-300 block font-sans">net value generated per year</span>
           </div>

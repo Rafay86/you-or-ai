@@ -105,14 +105,14 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
-              02 Assess Stage
+            <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+              Step 2 of 7
             </span>
             <span className="text-xs font-semibold text-slate-500">
               {tasks.length} Workflow Tasks Evaluated
             </span>
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-900 mt-1">Task Classification Matrix</h1>
+          <h1 className="text-2xl font-semibold text-slate-900 mt-1">Task Classification Matrix</h1>
           <p className="text-xs text-slate-500">
             Classify tasks into Human (YOU), AI-led (AI), or Human+AI (BOTH) using transparent rule criteria.
           </p>
@@ -127,16 +127,11 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
       </div>
 
       {/* Assessment Method Notice */}
-      <div className="p-3.5 rounded-xl bg-slate-900 text-white text-xs flex items-center justify-between border border-slate-800 shadow-sm">
-        <div className="flex items-center gap-2.5">
-          <Info className="h-4 w-4 text-gold-400 shrink-0" />
-          <span>
-            <strong className="text-gold-400">Assessment Method: </strong>
-            Recommendation generated from transparent rule-based criteria. It is a decision aid, not an autonomous decision.
-          </span>
-        </div>
-        <span className="text-[11px] text-slate-400 font-mono hidden md:inline">
-          assessTask() Deterministic Engine
+      <div className="p-4 rounded-xl bg-gold-50 border border-gold-200 text-sm text-gold-800 flex items-start gap-2.5">
+        <Info className="h-4 w-4 text-gold-600 shrink-0 mt-0.5" />
+        <span>
+          <strong>How to read these verdicts:</strong> each one comes from plain rules you can inspect. It’s advice for
+          you to weigh, not a decision made for you.
         </span>
       </div>
 
@@ -232,7 +227,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
             {/* Drawer Header */}
             <div className="flex items-start justify-between border-b border-slate-200 pb-4">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                <span className="text-[10px] font-bold text-slate-500">
                   Step {selectedTask.stepNumber} Details
                 </span>
                 <h3 className="text-lg font-bold text-slate-900 mt-0.5">{selectedTask.name}</h3>
@@ -249,7 +244,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
             {/* Recommendation Display */}
             <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+                <span className="text-xs font-bold text-slate-600 ">
                   Engine Recommendation
                 </span>
                 <RecommendationBadge
@@ -290,7 +285,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
 
             {/* Why? (Rationale) */}
             <div className="space-y-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+              <h4 className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
                 <Info className="h-4 w-4 text-blue-600" />
                 Why? (Transparent Rule Rationale)
               </h4>
@@ -307,7 +302,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
             {/* Risk Flags */}
             {selectedTask.riskFlags.length > 0 && (
               <div className="space-y-2">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
+                <h4 className="text-xs font-bold text-amber-900 flex items-center gap-1.5">
                   <ShieldAlert className="h-4 w-4 text-amber-600" />
                   Identified Risk Flags
                 </h4>
@@ -324,7 +319,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
 
             {/* Suggested Role Split */}
             <div className="space-y-3 pt-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-1.5">
+              <h4 className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
                 <SlidersHorizontal className="h-4 w-4 text-navy-900" />
                 Suggested Role Split (Human + AI)
               </h4>
@@ -405,7 +400,7 @@ export const TaskAssessmentView: React.FC<TaskAssessmentViewProps> = ({
                       {cls === 'YOU' && 'YOU (Human)'}
                       {cls === 'AI' && 'AI (Automated)'}
                       {cls === 'BOTH' && 'BOTH (Human + AI)'}
-                      {cls === 'NEEDS_ASSESSMENT' && 'NEEDS ASSESSMENT'}
+                      {cls === 'NEEDS_ASSESSMENT' && 'Needs a look'}
                     </button>
                   ))}
                 </div>

@@ -77,8 +77,8 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
-              01 Discover Stage
+            <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+              Step 1 of 7
             </span>
             {savedSuccess && (
               <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded animate-in fade-in">
@@ -86,7 +86,7 @@ export const DiscoverView: React.FC<DiscoverViewProps> = ({
               </span>
             )}
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-900 mt-1">Workflow Discovery & Intake</h1>
+          <h1 className="text-2xl font-semibold text-slate-900 mt-1">Workflow Discovery & Intake</h1>
           <p className="text-xs text-slate-500">Capture the operational context, volume, costs, systems, and key pain points of the target workflow.</p>
         </div>
 

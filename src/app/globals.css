@@ -4,27 +4,40 @@
 
 @layer base {
   body {
-    background-color: #F8FAFC;
-    color: #0F172A;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #F7F6FB;
+    color: #1B1934;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display), var(--font-body), system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+  :focus-visible {
+    outline: 2px solid #4353E8;
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: #F6C34E;
+    color: #1B1934;
   }
 }
 
-/* Custom scrollbars */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+@layer components {
+  /* Paper-like surface used by the shell; existing white cards pick up the softer shadow via tokens. */
+  .grain {
+    background-image: radial-gradient(rgba(27,25,52,0.045) 1px, transparent 1px);
+    background-size: 3px 3px;
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: #F1F5F9;
-}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #D5D2E6; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #B4B0CE; }
 
-::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

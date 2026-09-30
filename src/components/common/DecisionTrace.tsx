@@ -21,7 +21,7 @@ export const DecisionTraceView: React.FC<DecisionTraceProps> = ({ trace, filterT
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center gap-2 text-xs font-bold text-slate-700 uppercase tracking-wider">
+      <div className="flex items-center gap-2 text-xs font-bold text-slate-700 ">
         <History className="h-4 w-4 text-gold-600" />
         Immutable Decision Trace Log ({items.length})
       </div>

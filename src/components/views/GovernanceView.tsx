@@ -35,14 +35,14 @@ export const GovernanceView: React.FC<GovernanceViewProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
+            <span className="text-xs font-bold text-gold-600 bg-gold-100 px-2 py-0.5 rounded">
               Governance & Oversight
             </span>
             <span className="text-xs font-semibold text-slate-500">
               Enterprise Risk & Security Controls
             </span>
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-900 mt-1">Governance Workspace</h1>
+          <h1 className="text-2xl font-semibold text-slate-900 mt-1">Governance Workspace</h1>
           <p className="text-xs text-slate-500">
             Track data sensitivity, human oversight gates, synthetic test results, and multi-department owner signoffs.
           </p>
@@ -75,7 +75,7 @@ export const GovernanceView: React.FC<GovernanceViewProps> = ({
           return (
             <div key={cat} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 className="text-sm font-extrabold text-navy-900 flex items-center gap-2">
+                <h3 className="text-sm font-semibold text-navy-900 flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-gold-600" />
                   {cat} ({catItems.length})
                 </h3>
